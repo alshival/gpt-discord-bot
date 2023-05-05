@@ -1,3 +1,5 @@
+[Under Development]
+
 # gpt-discord-bot
 Discord Bot by Alshival's Data Service. Visit [Alshival.com](Alshival.com).
 
@@ -19,7 +21,7 @@ pip install discord.py openai
 
 Create a Python script that will serve as your bot. Here's an example script that uses GPT to generate responses to user input.
 
-Replace `OPENAI_API_KEY` with your actual OpenAI API key, and replace `DISCORD_BOT_TOKEN` with the token you generated in step 4, or better yet, add them as environmental variables (e.g. `~/.bashrc` on linux):
+Set environmental variables `OPENAI_API_KEY`, your actual OpenAI API key, and `DISCORD_BOT_TOKEN`, the token you generated in step 4. To do this on Linux, edit your `~/.bashrc` file:
 
 ```
 export OPENAI_API_KEY = "<API KEY>"
