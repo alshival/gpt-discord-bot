@@ -13,9 +13,9 @@ Generate a token for your bot by clicking on the "Copy" button next to "Token" u
 
 Install the necessary dependencies. You will need the Discord.py and OpenAI Python modules installed. You can install them using pip by running the following command in your terminal:
 
-"""
+```
 pip install discord.py openai
-"""
+```
 
 Create a Python script that will serve as your bot. Here's an example script that uses GPT to generate responses to user input.
     
@@ -27,6 +27,8 @@ Save your script as a Python file (e.g. "gpt_discord_bot.py").
 
 Run your bot by executing the following command in your terminal:
 
-Copy code
+```
 python gpt_discord_bot.py
+```
+
 Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, and copying the generated OAuth2 URL into your browser.
