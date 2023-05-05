@@ -21,12 +21,11 @@ Create a Python script that will serve as your bot. Here's an example script tha
 
 Replace "OPENAI_API_KEY" with your actual OpenAI API key, and replace "DISCORD_BOT_TOKEN" with the token you generated in step 4, or add them as environmental variables (e.g. `~/.bashrc` on linux)
 
-Save your script as a Python file (e.g. "gpt_discord_bot.py").
 
 Run your bot by executing the following command in your terminal:
 
 ```
-python gpt_discord_bot.py
+python gpt-discord-bot.py
 ```
 
 Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, and copying the generated OAuth2 URL into your browser.
