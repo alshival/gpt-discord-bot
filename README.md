@@ -3,7 +3,7 @@ Discord Bot by [Alshival's Data Service](https://alshival.com). It is a very bas
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
 
-Here's a step-by-step guide to get you started:
+# Installation
 
 Create a Discord account if you haven't already done so.
 
