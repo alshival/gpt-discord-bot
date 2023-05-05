@@ -4,7 +4,7 @@ import os
 
 
 # Set up the OpenAI API
-openai.api_key = os.environ.get(os.getenv("OPENAI_API_KEY"))
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Set up the Discord client
 client = discord.Client(intents=discord.Intents.default())
