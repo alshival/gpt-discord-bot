@@ -30,7 +30,7 @@ export DISCORD_BOT_TOKEN = "<BOT TOKEN>"
 Run your bot by executing the following command in your terminal:
 
 ```
-python gpt-discord-bot.py
+python gpt_discord_bot.py
 ```
 
 Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, and copying the generated OAuth2 URL into your browser.
