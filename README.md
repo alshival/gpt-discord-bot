@@ -1,6 +1,8 @@
 # gpt-discord-bot
 Discord Bot by Alshival's Data Service. Visit [Alshival.com](Alshival.com).
 
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
+
 Integrating GPT with Discord can be done by creating a Discord bot that utilizes the GPT API to generate text responses to user input. Here's a step-by-step guide to get you started:
 
 Create a Discord account if you haven't already done so.
