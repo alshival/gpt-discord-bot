@@ -1,27 +1,21 @@
 import discord
+from discord.ext import commands
 import openai
 import os
 
-
 # Set up the OpenAI API
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
-# Set up the Discord client
-client = discord.Client(intents=discord.Intents.default())
+# Set up the bot
+bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
-@client.event
-async def on_ready():
-    print(f"Logged in as {client.user}")
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
+# Define a command
+@bot.command()
+async def chatGPT(ctx, *, prompt):
     # Generate a response using GPT
     response = openai.Completion.create(
         engine="text-davinci-002",
-        prompt=message.content,
+        prompt=prompt,
         max_tokens=1024,
         n=1,
         stop=None,
@@ -29,7 +23,7 @@ async def on_message(message):
     )
 
     # Send the response back to the user
-    await message.channel.send(response.choices[0].text)
+    await ctx.send(response.choices[0].text)
 
 # Start the bot
-client.run(os.getenv("DISCORD_BOT_TOKEN"))
+bot.run(os.environ.get("DISCORD_BOT_TOKEN"))
