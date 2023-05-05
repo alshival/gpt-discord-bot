@@ -35,4 +35,12 @@ Run your bot by executing the following command in your terminal:
 python gpt_discord_bot.py
 ```
 
-Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, and copying the generated OAuth2 URL into your browser.
+Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, then select all of the text permissions you need, and copying the generated OAuth2 URL into your browser.
+
+The bot is called using `!chatGPT`.
+
+```
+!chatGPT Say hi to the Github community!
+```
+`Hello, Github community!`
+
