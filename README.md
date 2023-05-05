@@ -13,46 +13,15 @@ Generate a token for your bot by clicking on the "Copy" button next to "Token" u
 
 Install the necessary dependencies. You will need the Discord.py and OpenAI Python modules installed. You can install them using pip by running the following command in your terminal:
 
-Copy code
+"""
 pip install discord.py openai
-Create a Python script that will serve as your bot. Here's an example script that uses GPT to generate responses to user input:
-python
-Copy code
-import discord
-import openai
-import os
+"""
 
-# Set up the OpenAI API
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-
-# Set up the Discord client
-client = discord.Client()
-
-@client.event
-async def on_ready():
-    print(f"Logged in as {client.user}")
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    # Generate a response using GPT
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=message.content,
-        max_tokens=1024,
-        n=1,
-        stop=None,
-        temperature=0.7,
-    )
-
-    # Send the response back to the user
-    await message.channel.send(response.choices[0].text)
-
+Create a Python script that will serve as your bot. Here's an example script that uses GPT to generate responses to user input.
+    
 # Start the bot
 client.run("DISCORD_BOT_TOKEN")
-Replace "OPENAI_API_KEY" with your actual OpenAI API key, and replace "DISCORD_BOT_TOKEN" with the token you generated in step 4.
+Replace "OPENAI_API_KEY" with your actual OpenAI API key, and replace "DISCORD_BOT_TOKEN" with the token you generated in step 4, or add them as environmental variables (e.g. `~/.bashrc` on linux)
 
 Save your script as a Python file (e.g. "gpt_discord_bot.py").
 
