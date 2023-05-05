@@ -1,5 +1,5 @@
 # gpt-discord-bot
-Discord Bot by Alshival's Data Service. Visit [Alshival.com](Alshival.com).
+Discord Bot by Alshival's Data Service. Visit [Alshival.com](Alshival.com). It is a very basic bot that you can expand on. It currently uses davinci-002, which is cheaper to use than the newer models, hence a great choice for a discord server with many users. But you can easily swap out the model in the code.
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
 
