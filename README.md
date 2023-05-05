@@ -19,7 +19,7 @@ Install the necessary dependencies. You will need the Discord.py and OpenAI Pyth
 pip install discord.py openai
 ```
 
-Set environmental variables `OPENAI_API_KEY`, your actual OpenAI API key, and `DISCORD_BOT_TOKEN`, the token you generated in step 4. To do this on Linux, edit your `~/.bashrc` file:
+Set environmental variables `OPENAI_API_KEY`, your actual OpenAI API key, and `DISCORD_BOT_TOKEN`, the token you generated. To do this on Linux, edit your `~/.bashrc` file:
 
 ```
 export OPENAI_API_KEY = "<API KEY>"
