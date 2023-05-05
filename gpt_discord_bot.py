@@ -7,7 +7,7 @@ import os
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 # Set up the Discord client
-client = discord.Client()
+client = discord.Client(intents=discord.Intents.default())
 
 @client.event
 async def on_ready():
