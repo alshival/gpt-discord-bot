@@ -4,7 +4,7 @@ import os
 
 
 # Set up the OpenAI API
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.api_key = os.environ.get(os.getenv("OPENAI_API_KEY"))
 
 # Set up the Discord client
 client = discord.Client(intents=discord.Intents.default())
@@ -32,4 +32,4 @@ async def on_message(message):
     await message.channel.send(response.choices[0].text)
 
 # Start the bot
-client.run("DISCORD_BOT_TOKEN")
+client.run(os.getenv("DISCORD_BOT_TOKEN"))
