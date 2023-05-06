@@ -3,9 +3,9 @@ Discord Bot Starter Code using [openAi](https://openai.com/) by [Alshival's Data
   * `text-davinci-002` is cheaper to use than the heavier models, hence a great choice for a discord server with many users, though openAi offers some lighter models that might meet your needs. 
   * `gpt-3.5-turbo` is heavier and $\huge\textcolor{red}{\textbf{\textsf{great for study groups}}}$  or even $\huge\textcolor{green}{\textbf{\textsf{collaboration between small teams.}}}$ 
   
-  There are $\huge\textcolor{VioletRed}{\textsf{only 7 steps for install}}$.
   
-  You can easily swap out the model in the code with anything you need, even fine-tuned models. Check out [openAi's models](https://platform.openai.com/docs/models) for a complete list of models. 
+  
+  You can easily swap out the model in the code with anything you need, even fine-tuned models. Check out [openAi's models](https://platform.openai.com/docs/models) for a complete list of models. There are $\huge\textcolor{VioletRed}{\textsf{only 7 steps for install}}$.
 
 To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
 
