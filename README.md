@@ -12,13 +12,13 @@ If you'd like our help building more complicated bots, integrating the bot with 
 To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
 
 
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
 
 
 To use `gpt-3.5-turbo` in Discord, type `!chatGPTturbo` before your request.
 
 
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
 P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each, their own.
 # Installation
 
