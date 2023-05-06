@@ -17,7 +17,7 @@ To use `gpt-3.5-turbo`, use `!chatGPTturbo`.
 
 So that the bot can respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a raspberry pi in your bedroom (hint for students on a budget).
 
-You'll need a python installation (suggestion for students: get jupyterlab too)
+You'll need a python installation (suggestion for students: get jupyterlab too) and an [openAi API key](https://platform.openai.com/account/api-keys).
 
 ### Step 1
 Create a Discord account if you haven't already done so.
@@ -45,7 +45,7 @@ Set environmental variables `OPENAI_API_KEY`, your actual OpenAI API key, and `D
 export OPENAI_API_KEY = "<API KEY>"
 export DISCORD_BOT_TOKEN = "<BOT TOKEN>"
 ```
-
+Replace <API KEY> and <BOT TOKEN> with your openAi API key.
 You can edit your `~/.bashrc` file using a command line text editor like **nano** on a raspberry pi. 
 ```
 nano ~/.bashrc
