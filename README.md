@@ -28,7 +28,7 @@ You'll need a python installation (suggestion for students: get jupyterlab too) 
 Create a Discord account if you haven't already done so.
 
 ### Step 2
-Create a new Discord application at the Discord Developer Portal. Once you're logged in, click on the "New Application" button, give your application a name, and click "Create."
+Create a new Discord application at the [Discord Developer Portal](https://discord.com/login?redirect_to=%2Fdevelopers%2Fapplications). Once you're logged in, click on the "New Application" button, give your application a name, and click "Create."
 
 ### Step 3
 Create a bot for your Discord application by clicking on the "Bot" tab and then clicking "Add Bot." Give your bot a name and click "Create."
