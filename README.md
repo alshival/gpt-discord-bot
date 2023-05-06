@@ -6,7 +6,7 @@ Discord Bot Starter Code using [openAi](https://openai.com/) by [Alshival's Data
   
   You can easily swap out the model in the code with anything you need, even fine-tuned models. Check out [openAi's models](https://platform.openai.com/docs/models) for a complete list of models. There are $\huge\textcolor{VioletRed}{\textsf{only 7 steps for install}}$.
 
-If you'd like our help integrating the bot with your data system using a fine-tuned model, or if you'd like to train it to search through documents, visit our website at [Alshival.com](https://alshival.com).
+If you'd like our help integrating the bot with your data using a fine-tuned model, or if you'd like to train it to search through documents, visit our website at [Alshival.com](https://alshival.com).
 
 To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
 
