@@ -25,5 +25,25 @@ async def chatGPT(ctx, *, prompt):
     # Send the response back to the user
     await ctx.send(response.choices[0].text)
 
+# Define a command
+@bot.command()
+async def chatGPTturbo(ctx, *, message):
+    # Generate a response using GPT
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "system", "content":"Alshival's Data Service, at your service!"},{'role': 'user', 'content': message}],
+        max_tokens=1024,
+        n=1,
+        temperature=0.5,
+        top_p=1,
+        frequency_penalty=0.0,
+        presence_penalty=0.6,
+    )
+
+    # Send the response back to the user
+    await ctx.send(response.choices[0]['message']['content'])
+    
 # Start the bot
 bot.run(os.environ.get("DISCORD_BOT_TOKEN"))
+
+
