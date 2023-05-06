@@ -2,13 +2,13 @@
 Discord Bot Starter Code using [openAi](https://openai.com/) by [Alshival's Data Service](https://alshival.com). It is a very basic bot that you can expand on so that you can hit the ground running. It currently implements two models. `text-davinci-002` is cheaper to use than the newer models, hence a great choice for a discord server with many users who are just goofing around, though openAi offers some lighter models that might suffice. `gpt-3.5-turbo model` is heavier and more suitable for **study groups** or collaboration between smaller teams. You can easily swap out the model in the code with anything you need, even fine-tuned models. Check out [openAi's models](https://platform.openai.com/docs/models) for a list of models provided by openAi.
 
 
-To use text-davinci-002, use `!chatGPT`.
+To use `text-davinci-002`, use `!chatGPT`.
 
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
 
 
-To use gpt-3.5-turbo, use `!chatGPTturbo`.
+To use `gpt-3.5-turbo`, use `!chatGPTturbo`.
 
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
