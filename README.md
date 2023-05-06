@@ -45,7 +45,8 @@ Set environmental variables `OPENAI_API_KEY`, your actual OpenAI API key, and `D
 export OPENAI_API_KEY = "<API KEY>"
 export DISCORD_BOT_TOKEN = "<BOT TOKEN>"
 ```
-Replace <API KEY> and <BOT TOKEN> with your openAi API key.
+Replace <API KEY> with your openAi API key and <BOT TOKEN> with the token you created in Step 4.
+
 You can edit your `~/.bashrc` file using a command line text editor like **nano** on a raspberry pi. 
 ```
 nano ~/.bashrc
