@@ -8,7 +8,7 @@ Discord Bot Starter Code using [openAi](https://openai.com/) by [Alshival's Data
 
 If you'd like our help building more complicated bots, integrating the bot with your data using a fine-tuned model, or training it to search through documents, visit our website at [Alshival.com](https://alshival.com).
 
-
+# Usage
 To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
 
 
