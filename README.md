@@ -22,6 +22,7 @@ To use `gpt-3.5-turbo` in Discord, type `!chatGPTturbo` before your request.
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
 P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each, their own.
+
 # Installation
 
 So that the bot can respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a raspberry pi in your bedroom (hint for students on a budget).
