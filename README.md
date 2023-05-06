@@ -46,6 +46,12 @@ export OPENAI_API_KEY = "<API KEY>"
 export DISCORD_BOT_TOKEN = "<BOT TOKEN>"
 ```
 
+You can edit your `~/.bashrc` file using a command line text editor like **nano** on a raspberry pi. 
+```
+nano ~/.bashrc
+```
+Make changes and hit Ctrl+X to save and close.
+
 ### Step 7
 Run your bot by executing the following command in your terminal:
 
