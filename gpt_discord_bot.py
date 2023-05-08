@@ -31,7 +31,7 @@ async def chatGPTturbo(ctx, *, message):
     # Generate a response using GPT
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "system", "content":"Alshival's Data Service, at your service!"},{'role': 'user', 'content': message}],
+        messages=[{'role': 'user', 'content': message}],
         max_tokens=1024,
         n=1,
         temperature=0.5,
