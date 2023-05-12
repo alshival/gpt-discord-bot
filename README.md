@@ -3,6 +3,7 @@ Discord Bot Starter Code using [openAi](https://openai.com/) by [Alshival's Data
   * `text-davinci-002` is cheaper to use than the heavier models, hence a great choice for a discord server with many users, though openAi offers some lighter models that might meet your needs. 
   * `gpt-3.5-turbo` is heavier and $\huge\textcolor{red}{\textbf{\textsf{great as a tutor for study groups}}}$  or even $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
   
+Once GPT-4 scales up, we will update the code here to include a `!GPT4` command.
   
   You can easily swap out the model in the code with anything you need, even fine-tuned models. Check out [openAi's models](https://platform.openai.com/docs/models) for a complete list of models. There are $\huge\textcolor{VioletRed}{\textsf{only 7 steps for install}}$.
 
@@ -16,12 +17,15 @@ To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
 
-
 To use `gpt-3.5-turbo` in Discord, type `!chatGPTturbo` before your request.
-
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
 P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each, their own.
+
+Note that the basic bot doesn't remember conversations. Note further that `!chatGPTturbo` may take a few seconds to run.
+
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-12%202.37.22%20AM.png?raw=true">
+
 
 # Installation
 
