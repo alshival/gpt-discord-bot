@@ -24,9 +24,9 @@ P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each,
 
 Note that the basic bot doesn't remember conversations. Note further that `!chatGPTturbo` may take a few seconds to run.
 
-A data science student approached me on UpWork to do their homework. I helped them with the graph theory problems then told them just chug the rest through GPT. They were probability and calculus problems that I knew GPT could handle.  Advised them to form a study group and gave them a link to this bot. It works great for tutoring.
+A data science student approached me on UpWork to help with their homework. I helped them with the graph theory problems then told them just chug the rest through GPT. They were probability and calculus problems that I knew GPT could handle.  Advised them to form a study group and gave them a link to this bot. It works great for tutoring. Plus it would be cheaper for them to just ask GPT.
 
-If you want to learn Ai, then you can use Ai to help you learn Ai.
+If you want to learn Ai, then you can use Ai to help you learn Ai. As a mathematician, I was surprised by how capable these models are. I verified a few results and felt comfortable enough to recommend it to them.
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-12%202.37.22%20AM.png?raw=true">
 
