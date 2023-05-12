@@ -1,5 +1,5 @@
 # gpt-discord-bot Starter Code
-Discord Bot Starter Code using [openAi](https://openai.com/) by [Alshival's Data Service](https://alshival.com). It is a very basic bot that you can expand on so that you can hit the ground running. It currently implements two models. 
+Discord Bot Starter Code by [Alshival's Data Service](https://alshival.com) using [openAi](https://openai.com/). It is a very basic bot that you can expand on so that you can hit the ground running. It currently implements two models. 
   * `text-davinci-002` is cheaper to use than the heavier models, hence a great choice for a discord server with many users, though openAi offers some lighter models that might meet your needs. 
   * `gpt-3.5-turbo` is heavier and $\huge\textcolor{red}{\textbf{\textsf{great as a tutor for study groups}}}$  or even $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
   
