@@ -117,26 +117,25 @@ async def chatGPT(ctx, *, prompt):
     user_id = ctx.author.id
     
     channel_name = ctx.channel.name
-    past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
-
-    # Construct the messages parameter with the past prompts and responses and the current message
-    messages = []
-    for promp, response in past_prompts:
-        messages.extend([{'role': 'user', 'content': promp}, {'role': 'assistant', 'content': response}])
-    messages.append({'role': 'user', 'content': prompt})
-
+    # Past prompts not compatible with openai.Completion.create, 
+    # which is used to call `text-davinci-002`
+    # past_prompts = await fetch_prompts(db_conn, model, 4)  # Fetch the last 4 prompts and responses
+    
     # Generate a response using GPT
     response = openai.Completion.create(
         engine=model,
         prompt=prompt,
         max_tokens=1024,
         n=1,
-        stop=None,
+        stop="\n\n",
         temperature=0.7,
     )
     # Send the response back to the user
-    response_text = response.choices[0].text
-    await ctx.send(response_text)
+    response_text = response.choices[0].text.strip()
+    if response_text:  # This will be False for empty strings
+        await ctx.send(response_text)
+    else:
+        await ctx.send("I'm sorry, I don't have a response for that.")
 
     # Store the new prompt and response in the 'prompts' table
     await store_prompt(db_conn, user_id, prompt, model, response_text, channel_name)
