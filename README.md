@@ -15,7 +15,7 @@ Note that data privacy laws may come into play, such as Q&A bots for legal or me
 The basic bot doesn't remember conversations. Note further that `!chatGPTturbo` may take a few seconds to run.
 
 ### **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
-`gpt_discord_bot_v2.py` is our good ol' `gpt_discord_bot.py`, but with a SQLite3 database for memory storage. This bot DOES remember. The database stores 200 interactions though can be customized. The bot is set up to remember the past 4 interactions, independent of who submitted the prompt and what model they used. It only includes prompts from the channel from which `!chatGPT` and `!chatGPTturbo` are called. This can be adjusted in the code.  
+`gpt_discord_bot_v2.py` is our good ol' `gpt_discord_bot.py`, but with a SQLite3 database for memory storage. This bot DOES remember. The database stores 200 interactions though can be customized. The bot is set up to remember the past 4 interactions, independent of who submitted the prompt and what model they used. It only remembers prompts from the channel in which `!chatGPT` and `!chatGPTturbo` are called. This can be adjusted in the code.  
 Discord has a 2,000 character limit, so that is your input limit. Note that this does not check for token limits, as the tiktokens package was not working properly on my chromebook as the package requires an older version of python. Including historical messages could lead you to hitting against this limit.
 
 <p align="center">
