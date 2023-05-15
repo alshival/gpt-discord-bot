@@ -20,7 +20,7 @@ The basic bot doesn't remember conversations. Note further that `!chatGPTturbo` 
 Discord has a 2,000 character limit, so that is your input limit. Note that this does not check for token limits, as the tiktokens package was not working properly on my chromebook as the package requires an older version of python. Including historical messages could lead you to hitting against this limit.
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(2).png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(3).png?raw=true" width="75%" height="75%">
 </p>
 
 # Usage
