@@ -116,7 +116,6 @@ async def chatGPT(ctx, *, prompt):
     await db_conn.close()
 
 # Define a command
-# Define a command
 @bot.command()
 async def chatGPTturbo(ctx, *, message):
     # Generate a response using GPT
