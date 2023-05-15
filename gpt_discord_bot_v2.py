@@ -11,10 +11,12 @@ import sqlite3
 import aiosqlite
 import asyncio
 
-# Set up the OpenAI API
+# Set up the OpenAI API. The key is stored as an environment variable for security reasons. 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
-# Set up the bot
+# Set up the bot with '!' as the command prefix. 
+# It is set to listen and respond to all types of intents in the server. 
+# You can change the command prefix by replacing '!' with your preferred symbol.
 bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
 
