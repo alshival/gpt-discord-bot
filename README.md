@@ -45,6 +45,7 @@ The beauty of learning AI is that you can use AI itself to facilitate your learn
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-12%202.37.22%20AM.png?raw=true" width="50%" height="50%">
 </p>
+
 # Installation
 
 In order for the bot to respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a Raspberry Pi tucked away in your bedroom (a hint for students on a tight budget).
