@@ -16,6 +16,9 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 # Set up the bot
 bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
+
+########################################################################
+# Bot Boot Sequence
 ########################################################################
 # Create the 'prompts' table. This will run when the bot boots.
 async def create_table():
@@ -50,6 +53,8 @@ async def fetch_prompts(db_conn, channel_name, limit):
 
 ############################################################
 # In order to keep the memory low, we keep only 200 responses.
+# Responses are stored in the database until the bot boots up again.
+# This is part of the bot boot sequence.
 # Every time the bot boots up, it'll check this.
 # You can edit or comment out this part if you wish.
 async def update_cache():
@@ -88,7 +93,11 @@ async def store_prompt(db_conn, user_id, prompt, model, response, channel_name):
         await cursor.execute('INSERT INTO prompts (user_id, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (user_id, prompt, model, response, channel_name))
         await db_conn.commit()
 
-# Define a command. 
+########################################################################
+# Discord Function Calls !chatGPT & !chatGPTturbo
+########################################################################
+# You can edit the names of the commands by changing them here.
+# Define chatGPT 
 @bot.command()
 async def chatGPT(ctx, *, prompt):
     model = "text-davinci-002"
@@ -124,7 +133,7 @@ async def chatGPT(ctx, *, prompt):
     await store_prompt(db_conn, user_id, prompt, model, response_text, channel_name)
     await db_conn.close()
 
-# Define a command
+# Define chatGPTturbo
 @bot.command()
 async def chatGPTturbo(ctx, *, message):
     # Generate a response using GPT
@@ -162,6 +171,8 @@ async def chatGPTturbo(ctx, *, message):
     channel_name = ctx.channel.name
     await store_prompt(db_conn, user_id, message, model, response_text, channel_name)
     await db_conn.close()
-    
+
+########################################################################
 # Start the bot
+########################################################################
 bot.run(os.environ.get("DISCORD_BOT_TOKEN"))
