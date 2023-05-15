@@ -66,7 +66,7 @@ def update_cache():
         conn.commit()
         conn.close()
 
-update_cache()
+asyncio.get_event_loop().run_until_complete(update_cache())
 ############################################################
 
 
