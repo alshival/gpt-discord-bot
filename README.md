@@ -14,7 +14,7 @@ Remember, while using this bot, data privacy laws may apply in certain cases lik
 Please note that the basic bot does not remember conversations. Also, the `!chatGPTturbo` command might take a few seconds to execute.
 
 ## **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
-We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!chatGPTturbo` by integrating a SQLite3 database for memory storage, enabling the bot to remember. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!chatGPT`, then continue the conversation using `!chatGPTturbo`. These settings can be adjusted in the code.
+We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!chatGPTturbo` by integrating a SQLite3 database for memory storage, enabling the bot to maintain memories of conversations within a channel. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!chatGPT`, then continue the conversation using `!chatGPTturbo`. These settings can be adjusted in the code.
 
 Currently, memory support is not available with `!chatGPT`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
 
