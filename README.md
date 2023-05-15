@@ -16,7 +16,7 @@ The basic bot doesn't remember conversations. Note further that `!chatGPTturbo` 
 
 ### **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
 `gpt_discord_bot_v2.py` is our good ol' `gpt_discord_bot.py`, but with a SQLite3 database for memory storage. This bot DOES remember. The database stores 200 interactions though can be customized. The bot is set up to remember the past 4 interactions, independent of who submitted the prompt and what model they used. It only includes prompts from the channel from which `!chatGPT` and `!chatGPTturbo` are called. This can be adjusted in the code.  
-Discord has a 2,000 character limit, so that is your input limit. Note that this does not check for token limits, as the tiktokens package was not working properly on my chromebook, and including historical messages could lead you to hitting against this limit.]
+Discord has a 2,000 character limit, so that is your input limit. Note that this does not check for token limits, as the tiktokens package was not working properly on my chromebook, and including historical messages could lead you to hitting against this limit.
 
 # Usage
 To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
