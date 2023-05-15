@@ -48,11 +48,13 @@ async def fetch_prompts(db_conn, limit):
 # Every time the bot boots up, it'll check this.
 # You can edit or comment out this part if you wish.
 # Get the number of prompts in the table
-def update_cache():
-    conn = sqlite3.connect('data.db')
-    cursor = conn.cursor()
-    
-    count = cursor.execute('SELECT COUNT(*) FROM prompts').fetchall()[0][0]
+async def update_cache():
+    # Connect to the database
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    await cursor.execute('SELECT COUNT(*) FROM prompts')
+    count = (await cursor.fetchall())[0][0]
     # Check if the count exceeds 200
     max_rows = 200
 
@@ -61,10 +63,12 @@ def update_cache():
         delete_count = count - max_rows - 1  # Keep a maximum of max_rows prompts
 
         # Delete the oldest prompts
-        cursor.execute(f'DELETE FROM prompts WHERE id IN (SELECT id FROM prompts ORDER BY timestamp ASC LIMIT {delete_count})')
-        # commit the changes and close the connection
-        conn.commit()
-        conn.close()
+        await cursor.execute(f'DELETE FROM prompts WHERE id IN (SELECT id FROM prompts ORDER BY timestamp ASC LIMIT {delete_count})')
+        # commit the changes
+        await conn.commit()
+
+    # close the connection
+    await conn.close()
 
 asyncio.get_event_loop().run_until_complete(update_cache())
 ############################################################
