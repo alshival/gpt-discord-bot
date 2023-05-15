@@ -106,7 +106,7 @@ async def store_prompt(db_conn, user_id, prompt, model, response, channel_name):
 ########################################################################
 # The bot responds to two commands: '!chatGPT' and '!chatGPTturbo'.
 # You can customize the names of these commands by changing the names in the '@bot.command()' decorators.
-
+#-----------------------------------------------------------------------
 # The '!chatGPT' command generates a response using the 'text-davinci-002' model.
 # It fetches the last four prompts and responses from the database, and then generates a new response.
 @bot.command()
@@ -141,7 +141,7 @@ async def chatGPT(ctx, *, prompt):
     # Store the new prompt and response in the 'prompts' table
     await store_prompt(db_conn, user_id, prompt, model, response_text, channel_name)
     await db_conn.close()
-
+#-----------------------------------------------------------------------
 # The '!chatGPTturbo' command generates a response using the 'gpt-3.5-turbo' model.
 # Similar to the '!chatGPT' command, it fetches the last four prompts and responses, and then generates a new response.
 @bot.command()
