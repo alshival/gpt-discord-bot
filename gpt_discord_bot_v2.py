@@ -44,7 +44,7 @@ async def fetch_prompts(db_conn, limit):
         await cursor.execute('SELECT prompt, response FROM prompts ORDER BY timestamp DESC LIMIT ?', (limit,))
         return await cursor.fetchall()
 ############################################################
-# In order to keep the memory low, we keep only 100 responses.
+# In order to keep the memory low, we keep only 200 responses.
 # Every time the bot boots up, it'll check this.
 # You can edit or comment out this part if you wish.
 # Get the number of prompts in the table
@@ -53,8 +53,8 @@ def update_cache():
     cursor = conn.cursor()
     
     count = cursor.execute('SELECT COUNT(*) FROM prompts').fetchall()[0][0]
-    # Check if the count exceeds 50
-    max_rows = 100
+    # Check if the count exceeds 200
+    max_rows = 200
 
     if count >= max_rows:
         # Calculate the number of prompts to delete
