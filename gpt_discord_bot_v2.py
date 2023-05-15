@@ -154,31 +154,31 @@ async def chatGPTturbo(ctx, *, message):
     channel_name = ctx.channel.name
     past_prompts = await fetch_prompts(db_conn, model, 4)  # Fetch the last 4 prompts and responses
 
-        # Construct the messages parameter with the past prompts and responses and the current message
-        messages = []
-        for prompt, response in past_prompts:
-            messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
-        messages.append({'role': 'user', 'content': message})
+    # Construct the messages parameter with the past prompts and responses and the current message
+    messages = []
+    for prompt, response in past_prompts:
+        messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
+    messages.append({'role': 'user', 'content': message})
 
-        # Generate a response using the 'gpt-3.5-turbo' model
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=messages,
-            max_tokens=1024,
-            n=1,
-            temperature=0.5,
-            top_p=1,
-            frequency_penalty=0.0,
-            presence_penalty=0.6,
-        )
-        
-        # Extract the response text and send it back to the user
-        response_text = response['choices'][0]['message']['content']
-        await ctx.send(response_text)
+    # Generate a response using the 'gpt-3.5-turbo' model
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        max_tokens=1024,
+        n=1,
+        temperature=0.5,
+        top_p=1,
+        frequency_penalty=0.0,
+        presence_penalty=0.6,
+    )
 
-        # Store the new prompt and response in the 'prompts' table
-        await store_prompt(db_conn, user_id, message, model, response_text, channel_name)
-        await db_conn.close()
+    # Extract the response text and send it back to the user
+    response_text = response['choices'][0]['message']['content']
+    await ctx.send(response_text)
+
+    # Store the new prompt and response in the 'prompts' table
+    await store_prompt(db_conn, user_id, message, model, response_text, channel_name)
+    await db_conn.close()
 
 ########################################################################
 # Bot Startup Sequence
