@@ -1,5 +1,6 @@
 # gpt-discord-bot Starter Code
 Discord Bot Starter Code by [Alshival's Data Service](https://alshival.com) using [openAi](https://openai.com/). It is a very basic bot that you can expand on so that you can hit the ground running. It currently implements two models. 
+
   * `text-davinci-002` is cheaper to use than the heavier models, hence a great choice for a discord server with many users, though openAi offers some lighter models that might meet your needs. 
   * `gpt-3.5-turbo` is heavier and $\huge\textcolor{red}{\textbf{\textsf{great as a tutor for study groups}}}$  or even $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
   
@@ -11,6 +12,10 @@ If you'd like our help building more complicated bots, integrating the bot with 
 
 Note that data privacy laws may come into play, such as Q&A bots for legal or medical documents. For these, a self-hosted solution rather than discord would be required.
 
+The basic bot doesn't remember conversations. Note further that `!chatGPTturbo` may take a few seconds to run.
+
+[**Update 2023-05-15:** `gpt_discord_bot_v2.py` is our good ol' `gpt_discord_bot.py`, but with a SQLite3 database for memory storage. This bot DOES remember. It currently remembers the past 4 interactions, though this can be adjusted in the code. Discord has a 2,000 character limit, so that is your input limit. Note that this does not check for token limits, as the tiktokens package was not working properly on my chromebook, and including historical messages could lead you to hitting against this limit.]
+
 # Usage
 To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
 
@@ -21,8 +26,6 @@ To use `gpt-3.5-turbo` in Discord, type `!chatGPTturbo` before your request.
 
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
 P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each, their own.
-
-Note that the basic bot doesn't remember conversations. Note further that `!chatGPTturbo` may take a few seconds to run.
 
 A data science student approached me on UpWork to help with their homework. I helped them with the graph theory problems then told them just chug the rest through GPT. They were probability and calculus problems that I knew GPT could handle.  Advised them to form a study group and gave them a link to this bot. It works great for tutoring. Plus it would be cheaper for them to just ask GPT.
 
