@@ -79,12 +79,6 @@ async def store_prompt(db_conn, prompt,model,response):
         await cursor.execute('INSERT INTO prompts (prompt,model,response) VALUES (?, ?, ?)', (prompt,model, response))
         await db_conn.commit()
         
-def process_message(message):
-    if len(message) > 2000:
-        return "Sorry, your message exceeds the character limit of 2,000."
-    else:
-        # Process the message normally
-        return "Message accepted!"
 
 # Define a command. 
 @bot.command()
