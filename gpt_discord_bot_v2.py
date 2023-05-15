@@ -102,7 +102,7 @@ async def store_prompt(db_conn, user_id, prompt, model, response, channel_name):
         await db_conn.commit()
 
 ########################################################################
-# Discord Commands Definition
+# Discord Command Definitions
 ########################################################################
 # The bot responds to two commands: '!chatGPT' and '!chatGPTturbo'.
 # You can customize the names of these commands by changing the names in the '@bot.command()' decorators.
