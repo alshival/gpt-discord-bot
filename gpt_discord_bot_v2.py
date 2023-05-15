@@ -47,12 +47,12 @@ async def fetch_prompts(db_conn, limit):
 # In order to keep the memory low, we keep only 200 responses.
 # Every time the bot boots up, it'll check this.
 # You can edit or comment out this part if you wish.
-# Get the number of prompts in the table
 async def update_cache():
     # Connect to the database
     conn = await aiosqlite.connect('data.db')
     cursor = await conn.cursor()
-
+    
+    # Get the number of prompts in the table
     await cursor.execute('SELECT COUNT(*) FROM prompts')
     count = (await cursor.fetchall())[0][0]
     # Check if the count exceeds 200
