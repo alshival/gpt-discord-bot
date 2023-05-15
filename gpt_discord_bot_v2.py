@@ -21,15 +21,17 @@ bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
 
 ########################################################################
-# Bot Boot Sequence
+# Boot Sequence for the Bot
 ########################################################################
-# Create the 'prompts' table. This will run when the bot boots.
+# This function creates a table named 'prompts' in the SQLite database 'data.db' upon bot startup.
+# The table is used to store the bot's conversation history.
+# The table has fields for id, user_id, prompt, model, response, channel_name, and timestamp.
 async def create_table():
-    # Connect to the database
+    # Connect to the SQLite3 database named 'data.db'
     conn = await aiosqlite.connect('data.db')
     cursor = await conn.cursor()
 
-    # Create the table if it doesn't exist
+    # Create the 'prompts' table if it doesn't already exist
     await cursor.execute('''CREATE TABLE IF NOT EXISTS prompts
                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
                   user_id INTEGER NOT NULL,
@@ -43,7 +45,7 @@ async def create_table():
     await conn.commit()
     await conn.close()
     
-# Call the async function using an event loop
+# The 'create_table' function is called using the asyncio event loop when the bot starts up.
 asyncio.get_event_loop().run_until_complete(create_table())
 
 ########################################################################
