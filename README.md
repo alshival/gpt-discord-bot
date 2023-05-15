@@ -28,13 +28,13 @@ Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, t
 To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
 
 <p align="center">
-    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true" width="60%" height="60%">
+    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
 </p>
 
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
 
 <p align="center">
-    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true" width="60%" height="60%">
+    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
 </p>
 A little side note... Salski and I prefer using USB ports or RJ-45... but as they say, to each their own.
 
