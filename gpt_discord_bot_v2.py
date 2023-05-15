@@ -25,24 +25,28 @@ async def create_table():
     # Create the table if it doesn't exist
     await cursor.execute('''CREATE TABLE IF NOT EXISTS prompts
                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  user_id INTEGER NOT NULL,
                   prompt TEXT NOT NULL,
                   model TEXT,
                   response TEXT,
+                  channel_name TEXT,
                   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
     # Commit the changes and close the connection
     await conn.commit()
     await conn.close()
-
+    
 # Call the async function using an event loop
 asyncio.get_event_loop().run_until_complete(create_table())
 
 # This function is what gives our bot memory:
 # Fetch the last few prompts and responses
-async def fetch_prompts(db_conn, limit):
+# Fetch the last few prompts and responses by model and channel_name
+async def fetch_prompts(db_conn, channel_name, limit):
     async with db_conn.cursor() as cursor:
-        await cursor.execute('SELECT prompt, response FROM prompts ORDER BY timestamp DESC LIMIT ?', (limit,))
+        await cursor.execute('SELECT prompt, response FROM prompts WHERE channel_name = ? ORDER BY timestamp DESC LIMIT ?', (channel_name, limit,))
         return await cursor.fetchall()
+
 ############################################################
 # In order to keep the memory low, we keep only 200 responses.
 # Every time the bot boots up, it'll check this.
@@ -78,11 +82,10 @@ asyncio.get_event_loop().run_until_complete(update_cache())
 async def create_connection():
     return await aiosqlite.connect('data.db')
 
-async def store_prompt(db_conn, prompt,model,response):
+async def store_prompt(db_conn, user_id, prompt, model, response, channel_name):
     async with db_conn.cursor() as cursor:
-        await cursor.execute('INSERT INTO prompts (prompt,model,response) VALUES (?, ?, ?)', (prompt,model, response))
+        await cursor.execute('INSERT INTO prompts (user_id, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (user_id, prompt, model, response, channel_name))
         await db_conn.commit()
-        
 
 # Define a command. 
 @bot.command()
@@ -90,8 +93,12 @@ async def chatGPT(ctx, *, prompt):
     model = "text-davinci-002"
     
     db_conn = await create_connection()
-    past_prompts = await fetch_prompts(db_conn, 4)  # fetch the last 4 prompts and responses
+    user_id = ctx.author.id
+    
+    channel_name = ctx.channel.name
+    past_prompts = await fetch_prompts(db_conn, model, 4)  # fetch the last 4 prompts and responses
 
+    # Construct the messages
     # Construct the messages parameter with the past prompts and responses and the current message
     messages = []
     for promp, response in past_prompts:
@@ -112,7 +119,8 @@ async def chatGPT(ctx, *, prompt):
     await ctx.send(response_text)
     
     # Store the new prompt and response
-    await store_prompt(db_conn, prompt, model, response_text)
+    channel_name = ctx.channel.name
+    await store_prompt(db_conn, user_id, prompt, model, response_text, channel_name)
     await db_conn.close()
 
 # Define a command
@@ -122,7 +130,11 @@ async def chatGPTturbo(ctx, *, message):
     model = "gpt-3.5-turbo"
     
     db_conn = await create_connection()
-    past_prompts = await fetch_prompts(db_conn, 4)  # fetch the last 4 prompts and responses
+    user_id = ctx.author.id
+    
+    channel_name = ctx.channel.name
+    past_prompts = await fetch_prompts(db_conn, model, 4)  # fetch the last 4 prompts and responses
+
 
     # Construct the messages parameter with the past prompts and responses and the current message
     messages = []
@@ -146,7 +158,8 @@ async def chatGPTturbo(ctx, *, message):
     await ctx.send(response_text)
 
     # Store the new prompt and response
-    await store_prompt(db_conn, message, model, response_text)
+    channel_name = ctx.channel.name
+    await store_prompt(db_conn, user_id, message, model, response_text, channel_name)
     await db_conn.close()
     
 # Start the bot
