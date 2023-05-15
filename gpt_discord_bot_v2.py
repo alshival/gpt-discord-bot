@@ -126,21 +126,23 @@ async def chatGPT(ctx, *, prompt):
     messages.append({'role': 'user', 'content': prompt})
 
     # Generate a response using GPT
-    response = openai.Completion.create(
-        engine=model,
-        prompt=prompt,
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
         max_tokens=1024,
         n=1,
         stop=None,
         temperature=0.7,
     )
-    # Send the response back to the user
-    response_text = response.choices[0].text
+
+    # Extract the response text and send it back to the user
+    response_text = response['choices'][0]['message']['content']
     await ctx.send(response_text)
 
     # Store the new prompt and response in the 'prompts' table
     await store_prompt(db_conn, user_id, prompt, model, response_text, channel_name)
     await db_conn.close()
+
 #-----------------------------------------------------------------------
 # The '!chatGPTturbo' command generates a response using the 'gpt-3.5-turbo' model.
 # Similar to the '!chatGPT' command, it fetches the last four prompts and responses, and then generates a new response.
