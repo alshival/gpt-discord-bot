@@ -1,7 +1,8 @@
 ########################################################################
-# This version of the bot has memory. It'll remember past conversations.
-# It uses a SQLite3 database to do so.
+# This script creates a discord bot with memory capabilities. 
+# It utilizes the OpenAI API and SQLite3 database to store and retrieve past conversations. 
 ########################################################################
+
 import discord
 from discord.ext import commands
 import openai
@@ -50,7 +51,7 @@ async def fetch_prompts(db_conn, channel_name, limit):
     async with db_conn.cursor() as cursor:
         await cursor.execute('SELECT prompt, response FROM prompts WHERE channel_name = ? ORDER BY timestamp DESC LIMIT ?', (channel_name, limit,))
         return await cursor.fetchall()
-
+    
 ############################################################
 # In order to keep the memory low, we keep only 200 responses.
 # Responses are stored in the database until the bot boots up again.
@@ -81,9 +82,8 @@ async def update_cache():
     await conn.close()
 
 asyncio.get_event_loop().run_until_complete(update_cache())
+
 ############################################################
-
-
 # Create a global database connection
 async def create_connection():
     return await aiosqlite.connect('data.db')
@@ -98,6 +98,7 @@ async def store_prompt(db_conn, user_id, prompt, model, response, channel_name):
 ########################################################################
 # You can edit the names of the commands by changing them here.
 # Define chatGPT 
+
 @bot.command()
 async def chatGPT(ctx, *, prompt):
     model = "text-davinci-002"
