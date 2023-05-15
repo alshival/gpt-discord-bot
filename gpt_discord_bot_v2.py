@@ -16,7 +16,8 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 # Set up the bot
 bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
-# Create the 'prompts' table
+########################################################################
+# Create the 'prompts' table. This will run when the bot boots.
 async def create_table():
     # Connect to the database
     conn = await aiosqlite.connect('data.db')
@@ -39,9 +40,9 @@ async def create_table():
 # Call the async function using an event loop
 asyncio.get_event_loop().run_until_complete(create_table())
 
+########################################################################
 # This function is what gives our bot memory:
-# Fetch the last few prompts and responses
-# Fetch the last few prompts and responses by model and channel_name
+# Fetch the last few prompts and responses by channel_name
 async def fetch_prompts(db_conn, channel_name, limit):
     async with db_conn.cursor() as cursor:
         await cursor.execute('SELECT prompt, response FROM prompts WHERE channel_name = ? ORDER BY timestamp DESC LIMIT ?', (channel_name, limit,))
