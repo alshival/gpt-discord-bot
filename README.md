@@ -34,6 +34,7 @@ To use `gpt-3.5-turbo` in Discord, type `!chatGPTturbo` before your request.
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
 P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each, their own.
 
+
 A data science student approached me on UpWork to help with their homework. I helped them with the graph theory problems then told them just chug the rest through GPT. They were probability and calculus problems that I knew GPT could handle.  Advised them to form a study group and gave them a link to this bot. It works great for tutoring. Plus it would be cheaper for them to just ask GPT.
 
 If you want to learn Ai, then you can use Ai to help you learn Ai. As a mathematician, I was surprised by how capable these models are. I verified a few results and felt comfortable enough to recommend it to them.
