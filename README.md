@@ -1,94 +1,106 @@
-# gpt-discord-bot Starter Code
-Discord Bot Starter Code by [Alshival's Data Service](https://alshival.com) using [openAi](https://openai.com/). It is a very basic bot that you can expand on so that you can hit the ground running. It currently implements two models. 
+# GPT-Discord-Bot Starter Code
 
-  * `text-davinci-002` is cheaper to use than the heavier models, hence a great choice for a discord server with many users, though openAi offers some lighter models that might meet your needs. 
-  * `gpt-3.5-turbo` is heavier and $\huge\textcolor{red}{\textbf{\textsf{great as a tutor for study groups}}}$  or even $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
-  
-Once GPT-4 scales up, we will update the code here to include a `!GPT4` command.
-  
-  You can easily swap out the model in the code with anything you need, even fine-tuned models. Check out [openAi's models](https://platform.openai.com/docs/models) for a complete list of models. There are $\huge\textcolor{VioletRed}{\textsf{only 7 steps for install}}$.
+Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://alshival.com). This code utilizes [OpenAI](https://openai.com/) to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
 
-If you'd like our help building more complicated bots, integrating the bot with your data using a fine-tuned model, or training it to search through documents, visit our website at [Alshival.com](https://alshival.com).
+  * `text-davinci-002`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
+  * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
 
-Note that data privacy laws may come into play, such as Q&A bots for legal or medical documents. For these, a self-hosted solution rather than discord would be required.
+We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
 
-The basic bot doesn't remember conversations. Note further that `!chatGPTturbo` may take a few seconds to run.
+For assistance in building more complex bots, integrating the bot with your data using a fine-tuned model, or training it for document search, please visit [Alshival.com](https://alshival.com).
 
-### **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
-`gpt_discord_bot_v2.py` is our good ol' `gpt_discord_bot.py`, but powers up`!chatGPTturbo` with a SQLite3 database for memory storage. This bot DOES remember. The database stores 200 interactions though can be customized. The bot is set up to remember the past 4 interactions with the bot from which `!chatGPT` and `!chatGPTturbo` are called, independent of who submitted the prompt and what model they used. This means you can use `!chatGPT`, then continue the conversation using `!chatGPTturbo`. This can be adjusted in the code.  
+Remember, while using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases.
 
-(Currently, memory not supported with `!chatGPT`. The command `!GPT4` will be included once GPT4 leaves beta and will include increased memory capabilities.)
+Please note that the basic bot does not remember conversations. Also, the `!chatGPTturbo` command might take a few seconds to execute.
 
-Discord has a 2,000 character limit, so that is your input limit. Note that this does not check for token limits, as the tiktokens package was not working properly on my chromebook as the package requires an older version of python. Including historical messages could lead you to hitting against this limit.
+## **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
+We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!chatGPTturbo` by integrating a SQLite3 database for memory storage, enabling the bot to remember. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!chatGPT`, then continue the conversation using `!chatGPTturbo`. These settings can be adjusted in the code.
+
+Currently, memory support is not available with `!chatGPT`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
+
+Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the tiktokens package with older Python versions on certain platforms, like my Chromebook. Including historical messages might lead you to hit this limit.
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(1).png?raw=true" width="75%" height="75%">
 </p>
 
 # Usage
-To use `text-davinci-002` in Discord, type `!chatGPT` before your request.
+To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
 
+<p align="center">
+    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true" width="60%" height="60%">
+</p>
 
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
+For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
 
-To use `gpt-3.5-turbo` in Discord, type `!chatGPTturbo` before your request.
+<p align="center">
+    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true" width="60%" height="60%">
+</p>
+A little side note... Salski and I prefer using USB ports or RJ-45... but as they say, to each their own.
 
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
-P.S... Salski and I prefer using USB ports or RJ-45... but. You know... To each, their own.
+Here's a case study: A data science student sought my help on UpWork for their homework. I assisted them with their graph theory problems, then suggested they use GPT for the remaining probability and calculus problems. Knowing GPT's capabilities, I recommended them to form a study group and gave them a link to this bot. It proved to be an excellent tutoring tool, and also a cost-effective solution for the students.
 
+The beauty of learning AI is that you can use AI itself to facilitate your learning. As a mathematician, I was amazed by the proficiency of these models. After verifying a few results, I felt confident enough to recommend it to the students.
 
-A data science student approached me on UpWork to help with their homework. I helped them with the graph theory problems then told them just chug the rest through GPT. They were probability and calculus problems that I knew GPT could handle.  Advised them to form a study group and gave them a link to this bot. It works great for tutoring. Plus it would be cheaper for them to just ask GPT.
-
-If you want to learn Ai, then you can use Ai to help you learn Ai. As a mathematician, I was surprised by how capable these models are. I verified a few results and felt comfortable enough to recommend it to them.
-
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-12%202.37.22%20AM.png?raw=true">
-
-
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-12%202.37.22%20AM.png?raw=true" width="50%" height="50%">
+</p>
 # Installation
 
-So that the bot can respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a raspberry pi in your bedroom (hint for students on a budget).
+In order for the bot to respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a Raspberry Pi tucked away in your bedroom (a hint for students on a tight budget).
 
-You'll need a python installation (suggestion for students: get jupyterlab too) and an [openAi API key](https://platform.openai.com/account/api-keys).
+You'll need a Python installation (students, we suggest getting JupyterLab as well) and an [OpenAI API key](https://platform.openai.com/account/api-keys).
 
 ### Step 1
-Create a Discord account if you haven't already done so.
+Create a Discord account if you haven't already.
 
 ### Step 2
-Create a new Discord application at the [Discord Developer Portal](https://discord.com/login?redirect_to=%2Fdevelopers%2Fapplications). Once you're logged in, click on the "New Application" button, give your application a name, and click "Create."
+Set up a new Discord application at the [Discord Developer Portal](https://discord.com/login?redirect_to=%2Fdevelopers%2Fapplications). After logging in, click on the "New Application" button, name your application, and hit "Create."
 
 ### Step 3
-Create a bot for your Discord application by clicking on the "Bot" tab and then clicking "Add Bot." Give your bot a name and click "Create."
+Create a bot for your Discord application by clicking on the "Bot" tab and then "Add Bot." Name your bot and click "Create."
 
 ### Step 4
-Generate a token for your bot by clicking on the "Copy" button next to "Token" under the bot's name. Keep this token secure, as it will be used to authenticate your bot with the Discord API.
+Generate a token for your bot by clicking on the "Copy" button next to "Token" under the bot's name. Keep this token secure as it's needed to authenticate your bot with the Discord API.
 
 ### Step 5
-Install the necessary dependencies. You will need the Discord.py and OpenAI Python modules installed. You can install them using pip by running the following command in your terminal:
+Install the necessary dependencies, which are the Discord.py and OpenAI Python modules. Install them via pip by running the following command in your terminal:
 
 ```
 pip install discord.py openai
 ```
 
 ### Step 6
-Set environmental variables `OPENAI_API_KEY`, your actual OpenAI API key, and `DISCORD_BOT_TOKEN`, the token you generated. To do this on Linux, edit your `~/.bashrc` file:
+Set the environment variables `OPENAI_API_KEY` (your actual OpenAI API key) and `DISCORD_BOT_TOKEN` (the token you generated). On Linux, you can do this by editing your `~/.bashrc` file:
 
 ```
-export OPENAI_API_KEY = "<API KEY>"
-export DISCORD_BOT_TOKEN = "<BOT TOKEN>"
+export OPENAI_API_KEY="<API KEY>"
+export DISCORD_BOT_TOKEN="<BOT TOKEN>"
 ```
-Replace <API KEY> with your openAi API key and <BOT TOKEN> with the token you created in Step 4.
+Replace `<API KEY>` with your OpenAI API key and `<BOT TOKEN>` with the token you created in Step 4.
 
-You can edit your `~/.bashrc` file using a command line text editor like **nano** on a raspberry pi. 
+You can edit your `~/.bashrc` file using a command-line text editor like nano on a Raspberry Pi. 
+
 ```
 nano ~/.bashrc
 ```
-Make changes and hit Ctrl+X to save and close.
+Make your changes and hit Ctrl+X to save and close.
 
 ### Step 7
-Run your bot by executing the following command in your terminal:
+Launch your bot by executing the following command in your terminal:
 
 ```
 python gpt_discord_bot.py
 ```
 
-Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, then select all of the text permissions you need, and copying the generated OAuth2 URL into your browser.
+Or for version 2:
+
+```
+python gpt_discord_bot_v2.py
+```
+
+Congratulations! Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, then choosing the text permissions you need, and finally, copying the generated OAuth2 URL into your browser.
+
+With this simple installation process, you are all set to explore the world of AI-driven chatbots. Happy coding!
+
+Remember, this is just a starting point. As you grow more comfortable with the bot and its capabilities, feel free to make modifications and enhancements to better meet the needs of your community. Happy coding!
