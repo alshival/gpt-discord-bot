@@ -117,7 +117,7 @@ async def chatGPT(ctx, *, prompt):
     user_id = ctx.author.id
     
     channel_name = ctx.channel.name
-    past_prompts = await fetch_prompts(db_conn, model, 4)  # Fetch the last 4 prompts and responses
+    past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
 
     # Construct the messages parameter with the past prompts and responses and the current message
     messages = []
@@ -152,7 +152,7 @@ async def chatGPTturbo(ctx, *, message):
     user_id = ctx.author.id
     
     channel_name = ctx.channel.name
-    past_prompts = await fetch_prompts(db_conn, model, 4)  # Fetch the last 4 prompts and responses
+    past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
 
     # Construct the messages parameter with the past prompts and responses and the current message
     messages = []
