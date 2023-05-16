@@ -31,7 +31,7 @@ Currently, memory support is not available with `!chatGPT`. The `!GPT4` command 
 Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(1).png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="75%" height="75%">
 </p>
 
 # Usage
