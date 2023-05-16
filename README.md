@@ -20,10 +20,6 @@ Prompts and Responses are stored in the sqlite database `data.db` under the `pro
 
 This version also includes a `!reminder` function for scheduling reminders. 
 
-```
-!reminder 2023-05-16 14:15 Take a break!
-```
-
 These reminders are stored in the sqlite database `data.db` under the `reminders` table.
 
 Currently, memory support is not available with `!chatGPT`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
