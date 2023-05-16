@@ -11,10 +11,11 @@ import discord
 from discord.ext import commands,tasks
 import openai
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import sqlite3
 import aiosqlite
 import asyncio
+import json
 
 # Set up the OpenAI API. The key is stored as an environment variable for security reasons. 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
@@ -24,6 +25,192 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 # You can change the command prefix by replacing '!' with your preferred symbol.
 bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
+
+########################################################################
+# Keras Task Assigner
+########################################################################
+# This code demonstrates a simple task assigner using Keras, which classifies
+# messages as either 'reminder' or 'other'. It is used before GPT in order
+# to classify which type of task will be run.
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+max_sequence_length = None
+word_to_index = None
+model = None
+
+async def train_keras():
+    global max_sequence_length
+    global word_to_index
+    global model
+
+    # Dummy training data generated using GPT4
+    messages = [
+        "Remind me to pick up the kids in 45 minutes",
+        "Remind me to turn in my homework at midnight",
+        "What's your favorite color?",
+        "Remind me to call mom at 3pm.",
+        "Can you send me the report?",
+        "Buy tickets for the concert",
+        "Remind me to pick up some milk later.",
+        "Remind us to study for the final exam next week.",
+        "remind me to fix my essay in an hour.",
+        "remind me to throw my shoes away in three days.",
+        "About how many atoms are there in the universe?",
+        "Remind me to feed the dog at 6pm.",
+        "Let's play a game.",
+        "Can you turn on the TV?",
+        "Remind me to check my email after dinner.",
+        "What's the weather like today?",
+        "Remind me to take my medicine at 8am.",
+        "Let's order pizza for dinner.",
+        "Remind me to water the plants tomorrow morning.",
+        "How many planets are there in our solar system?",
+        "Remind me to book a doctor's appointment next Monday.",
+        "Can you find a good recipe for spaghetti bolognese?",
+        "Remind me to charge my phone.",
+        "Who won the basketball game last night?",
+        "Remind me to finish my online course this weekend.",
+        "Can you tell me a joke?",
+        "Remind me to call the plumber tomorrow.",
+        "What's the capital of Australia?",
+        "Remind me to renew my driver's license next month.",
+        "Remind me to buy groceries on the way home.",
+        "What time is it?",
+        "Remind me to pick up my dry cleaning this afternoon.",
+        "Who won the Oscar for Best Picture last year?",
+        "Remind me to check the oven in 30 minutes.",
+        "Can you recommend a good book?",
+        "Remind me to schedule a team meeting for next Tuesday.",
+        "What's the score of the baseball game?",
+        "Remind me to fill up the car with gas tomorrow.",
+        "Can you find the fastest route to the airport?",
+        "Remind me to pay the electric bill by the end of the week.",
+        "Who is the president of the United States?",
+        "Remind me to update my resume this weekend.",
+        "Can you play my favorite song?",
+        "Remind me to check in for my flight 24 hours before departure.",
+        "What are the ingredients in a Caesar salad?",
+        "Remind me to bring my umbrella if it's going to rain tomorrow.",
+        "How do you make a margarita?",
+        "Remind me to pick up the kids in 45 minutes",
+        "Remind me to turn in my homework at midnight",
+        "What's your favorite color?",
+        "Remind me to call mom at 3pm.",
+        "Can you send me the report?",
+        "Buy tickets for the concert",
+        "Remind me to pick up some milk later.",
+        "Remind us to study for the final exam next week.",
+        "remind me to fix my essay in an hour.",
+        "remind me to throw my shoes away in three days.",
+        "About how many atoms are there in the universe?",
+        "Remind me to feed the dog at 6pm.",
+        "Let's play a game.",
+        "Can you turn on the TV?",
+        "Remind me to check my email after dinner.",
+        "What's the weather like today?",
+        "Remind me to take my medicine at 8am.",
+        "Let's order pizza for dinner.",
+        "Remind me to water the plants tomorrow morning.",
+        "How many planets are there in our solar system?",
+        "Remind me to book a doctor's appointment next Monday.",
+        "Can you find a good recipe for spaghetti bolognese?",
+        "Remind me to charge my phone.",
+        "Who won the basketball game last night?",
+        "Remind me to finish my online course this weekend.",
+        "Can you tell me a joke?",
+        "Remind me to call the plumber tomorrow.",
+        "What's the capital of Australia?",
+        "Remind me to renew my driver's license next month.",
+        "Remind me to buy groceries on the way home.",
+        "What time is it?",
+        "Remind me to pick up my dry cleaning this afternoon.",
+        "Who won the Oscar for Best Picture last year?",
+        "Remind me to check the oven in 30 minutes.",
+        "Can you recommend a good book?",
+        "Remind me to schedule a team meeting for next Tuesday.",
+        "What's the score of the baseball game?",
+        "Remind me to fill up the car with gas tomorrow.",
+        "Can you find the fastest route to the airport?",
+        "Remind me to pay the electric bill by the end of the week.",
+        "Who is the president of the United States?",
+        "Remind me to update my resume this weekend.",
+        "Can you play my favorite song?",
+        "Remind me to check in for my flight 24 hours before departure.",
+        "What are the ingredients in a Caesar salad?",
+        "Remind me to bring my umbrella if it's going to rain tomorrow.",
+        "How do you make a margarita?",
+        "In a short answer, tell me how to write pi/2 as an infinite sum."
+    ]
+    labels = [
+        'reminder','reminder','other','reminder','other',
+        'other','reminder','reminder','reminder','reminder',
+        'other','reminder','other','other','reminder','other',
+        'reminder','other','reminder','other','reminder','other',
+        'reminder','other','reminder','other','reminder','other',
+        'reminder','reminder','other','reminder','other','reminder',
+        'other','reminder','other','reminder','other','reminder',
+        'other','reminder','other','reminder','other','reminder',
+        'other','reminder','reminder','other','reminder','other',
+        'other','reminder','reminder','reminder','reminder','other',
+        'reminder','other','other','reminder','other','reminder','other',
+        'reminder','other','reminder','other','reminder','other','reminder',
+        'other','reminder','other','reminder','reminder','other','reminder',
+        'other','reminder','other','reminder','other','reminder','other',
+        'reminder','other','reminder','other','reminder','other','reminder',
+        'other','other']
+
+
+    # Preprocessing
+    vocab = set(' '.join(messages).lower().split())
+    vocab_size = len(vocab)
+    word_to_index = {word: index for index, word in enumerate(vocab)}
+    max_sequence_length = max(len(message.split()) for message in messages)
+
+    # Convert sentences to numerical sequences
+    X = np.zeros((len(messages), max_sequence_length))
+    for i, message in enumerate(messages):
+        words = message.lower().split()
+        for j, word in enumerate(words):
+            X[i, j] = word_to_index[word]
+
+    # Convert labels to numerical values
+    label_to_index = {'reminder': 0, 'other': 1}
+    y = np.array([label_to_index[label] for label in labels])
+
+    # Define the model
+    model = Sequential()
+    model.add(Dense(64, activation='relu', input_shape=(max_sequence_length,)))
+    model.add(Dense(1, activation='sigmoid'))
+
+    # Compile the model
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+    # Train the model
+    model.fit(X, y, epochs=25, batch_size=1, verbose=1)
+
+# Train the model when the bot starts up.
+asyncio.get_event_loop().run_until_complete(train_keras())
+
+# Classify text.
+async def classify_prompt(input_string):
+    global max_sequence_length
+    global word_to_index
+    global model
+
+    # Preprocess the input string
+    new_sequence = np.zeros((1, max_sequence_length))
+    words = input_string.lower().split()
+    for j, word in enumerate(words):
+        if word in word_to_index:
+            new_sequence[0, j] = word_to_index[word]
+
+    # Make prediction
+    prediction = model.predict(new_sequence)
+    predicted_label = 'reminder' if prediction < 0.5 else 'other'
+
+    return predicted_label
 
 ########################################################################
 # Boot Sequence for the Bot
@@ -53,11 +240,11 @@ async def create_table():
     
 # The 'create_table' function is called using the asyncio event loop when the bot starts up.
 asyncio.get_event_loop().run_until_complete(create_table())
+
 #-----------------------------------------------------------------------
 # 'create_reminder_table' function creates a new table named 'reminders' in the SQLite database 'data.db'.
 # This table is used to store reminders set by users.
 # The table has fields for id, username, message, channel_name, and reminder_time.
-
 async def create_reminder_table():
     conn = await aiosqlite.connect('data.db')
     cursor = await conn.cursor()
@@ -68,12 +255,35 @@ async def create_reminder_table():
                   reminder TEXT NOT NULL,
                   channel_id TEXT NOT NULL,
                   channel_name TEXT NOT NULL,
-                  reminder_time TIMESTAMP NOT NULL)''')
+                  reminder_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
     await conn.commit()
     await conn.close()
 
 asyncio.get_event_loop().run_until_complete(create_reminder_table())
+
+
+#-----------------------------------------------------------------------
+# 'create_labeled_prompts_table' function creates a new table named 'labeled_prompts' in the SQLite database 'data.db'.
+# This table is used to quickly label the last channel prompt as a 'reminder' request or 'order' request. 
+# Use `!label_last reminder` or `!label_last other` in Discord.
+
+async def create_labeled_prompts_table():
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+    await cursor.execute('''CREATE TABLE IF NOT EXISTS labeled_prompts
+                      (id INTEGER PRIMARY_KEY,
+                      username TEXT NOT NULL,
+                      prompt TEXT NOT NULL,
+                      model TEXT,
+                      response TEXT,
+                      channel_name TEXT,
+                      timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                      label TEXT)''')
+    await conn.commit()
+    await conn.close()
+
+asyncio.get_event_loop().run_until_complete(create_labeled_prompts_table())
 
 #-----------------------------------------------------------------------
 # This function is used to fetch past conversations from the 'prompts' table.
@@ -164,6 +374,43 @@ async def add_reminder(username, reminder, channel_id, channel_name, reminder_ti
                          (username, reminder, channel_id, channel_name, reminder_time))
     await conn.commit()
     await conn.close()
+    
+#----------------------------------------------------------------------
+async def label_last_prompt(db_conn, label):
+    async with db_conn.cursor() as cursor:
+        await cursor.execute(f"SELECT * FROM prompts where channel_name = '{channel_name}'ORDER BY id DESC LIMIT 1")
+        last_row = cursor.fetchone()
+       # If last_row is not None, insert its data into 'labeled_prompts'
+        if last_row is not None:
+            insert_query = '''INSERT INTO labeled_prompts (id, username, prompt, model, response, channel_name, timestamp,label)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
+            data_tuple = last_row + (label,)  # Add label to the tuple
+            
+            await cursor.execute(insert_query, data_tuple)
+            await db_conn.commit()
+            
+async def label_last_prompt(db_conn, username, prompt, model, response, channel_name):
+    async with db_conn.cursor() as cursor:
+        # get last row
+        await cursor.execute(f"SELECT * FROM prompts where channel_name = '{channel_name}'ORDER BY id DESC LIMIT 1")
+        last_row = cursor.fetchone()
+
+        await cursor.execute('INSERT INTO prompts (username, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (username, prompt, model, response, channel_name))
+        if last_row is not None:
+            insert_query = '''INSERT INTO labeled_prompts 
+            (id, username, prompt, model, 
+            response, channel_name, timestamp,label
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
+
+            data_tuple = last_row + (label,)  # Add label to the tuple
+
+            await cursor.execute(insert_query, data_tuple)
+            await db_conn.commit()
+# Ignore this chunk
+# async def store_prompt(db_conn, username, prompt, model, response, channel_name):
+#     async with db_conn.cursor() as cursor:
+#         await cursor.execute('INSERT INTO prompts (username, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (username, prompt, model, response, channel_name))
+#         await db_conn.commit()
 
 ########################################################################
 # Discord Command Definitions
@@ -211,39 +458,93 @@ async def chatGPT(ctx, *, prompt):
 # Similar to the '!chatGPT' command, it fetches the last four prompts and responses, and then generates a new response.
 @bot.command()
 async def chatGPTturbo(ctx, *, message):
+
     model = "gpt-3.5-turbo"
     
     db_conn = await create_connection()
     username = ctx.author.name
     
     channel_name = ctx.channel.name
-    past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
+    
+    message_category = await classify_prompt(message)
+    
+    # await ctx.send(message_category)
+    
+    if message_category == 'reminder':
+        messages = []
+        messages.extend([{'role':'user','content':'remind me to turn in my homework next week.'},
+                        {'role':'assistant','content':"""{"message":"Turn in homework","reminder_time":"(datetime.now() + timedelta(weeks=1)).strftime('%Y-%m-%d %H:%M:00')"} """}])
+        messages.extend([{'role': 'user', 'content': "Remind me in three hours to pick up the kids."},
+                      {'role': 'assistant', 'content': """{"message":"Pick up the kids","reminder_time":"(datetime.now() + timedelta(hours=3)).strftime('%Y-%m-%d %H:%M:00')"} """}])
+        messages.extend([{'role': 'user', 'content': 'Remind me to buy groceries tomorrow.'},
+                        {'role': 'assistant', 'content': """{"message":"Buy groceries","reminder_time":"(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:00')"} """}])
+        messages.extend([{'role': 'user', 'content': 'Remind me in 30 minutes to call my mom.'},
+                         {'role': 'assistant', 'content': """{"message":"Call mom","reminder_time":"(datetime.now() + timedelta(minutes=30)).strftime('%Y-%m-%d %H:%M:00')"} """}])
+        messages.append({'role':'user','content':f'Put this in the same format as before: {message}'})
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages,        
+            max_tokens=1024,
+            n=1,
+            temperature=0.5,
+            top_p=1,
+            frequency_penalty=0.0,
+            presence_penalty=0.6,
+        )
 
-    # Construct the messages parameter with the past prompts and responses and the current message
-    messages = []
-    for prompt, response in past_prompts:
-        messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
-    messages.append({'role': 'user', 'content': message})
+        # Extract the response text and send it back to the user
+        response_text = response['choices'][0]['message']['content']
+        
+        response_text = eval(response_text)
+        
+        reminder_time = eval(response_text['reminder_time'])
+        
+        dictionary = {
+            'message': response_text['message'],
+            'response_time': reminder_time
+        }
+        
+        await store_prompt(db_conn, ctx.author.name, message, model, f"Reminder set for {reminder_time}.", channel_name)
+        
+        # Add the new reminder to the database
+        await add_reminder(ctx.author.name, response_text['message'], ctx.channel.id, ctx.channel.name, reminder_time)
+        
+        await ctx.send(f"Reminder set for {reminder_time}.")
+        
+    elif message_category == 'other':
+        past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
 
-    # Generate a response using the 'gpt-3.5-turbo' model
-    response = openai.ChatCompletion.create(
-        model=model,
-        messages=messages,
-        max_tokens=1024,
-        n=1,
-        temperature=0.5,
-        top_p=1,
-        frequency_penalty=0.0,
-        presence_penalty=0.6,
-    )
+        # Construct the messages parameter with the past prompts and responses and the current message
+        messages = []
+        # Here we include some examples of reminders for our task model. Ideally, this would be a fine-tuned model,
+        # but that requires further setup.
+        messages.extend([{'role': 'user', 'content': "Remind me to turn in my homework next week."},
+                         {'role': 'assistant', 'content': f'!reminder {(datetime.now() + timedelta(weeks=1)).strftime("%Y-%m-%d")} Turn in homework'}])
+        messages.extend([{'role': 'user', 'content': "Remind me in three hours to pick up the kids."},
+                         {'role': 'assistant', 'content': f'!reminder {(datetime.now() + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M")} Pick up the kids'}])
+        for prompt, response in past_prompts:
+            messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
+        messages.append({'role': 'user', 'content': message})
 
-    # Extract the response text and send it back to the user
-    response_text = response['choices'][0]['message']['content']
-    await ctx.send(response_text)
+        # Generate a response using the 'gpt-3.5-turbo' model
+        response = openai.ChatCompletion.create(
+            model=model,
+            messages=messages,
+            max_tokens=1024,
+            n=1,
+            temperature=0.5,
+            top_p=1,
+            frequency_penalty=0.0,
+            presence_penalty=0.6,
+        )
 
-    # Store the new prompt and response in the 'prompts' table
-    await store_prompt(db_conn, username, message, model, response_text, channel_name)
-    await db_conn.close()
+        # Extract the response text and send it back to the user
+        response_text = response['choices'][0]['message']['content']
+        await ctx.send(response_text)
+
+        # Store the new prompt and response in the 'prompts' table
+        await store_prompt(db_conn, username, message, model, response_text, channel_name)
+        await db_conn.close()
 
 #-----------------------------------------------------------------------
 # '!reminder' command sets a new reminder.
@@ -268,6 +569,20 @@ async def reminder(ctx, date: str, time: str, *, message: str):
 
     # Send a confirmation message
     await ctx.send(f"Reminder set for {reminder_time.strftime('%Y-%m-%d %H:%M')}.")
+
+
+#-----------------------------------------------------------------------
+# '!label_last' command to correctly label the last prompt.
+@bot.command()
+async def label_last(ctx, label: str):
+    # Verify the label
+    if label not in ['reminder', 'other']:
+        await ctx.send("Invalid label. Please use 'reminder' or 'other'.")
+        return
+    db_conn = await create_connection()
+    channel_name = ctx.channel.name
+    
+    await ctx.send(f"Last promped labeled as: {label}")
 
 #-----------------------------------------------------------------------
 # The 'send_reminders' function is a looping task that runs every minute.
@@ -299,7 +614,7 @@ async def send_reminders():
             await channel.send(f"@{username}, you set a reminder: {reminder_text}")
 
             # Then delete the reminder from the database
-            await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?', (username, reminder_time.strftime("%Y-%m-%d %H:%M:00")))
+            await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?', (username, reminder_time))
             await conn.commit()
 
     # Close the connection
@@ -312,7 +627,6 @@ async def send_reminders():
 async def on_ready():
     print(f'We have logged in as {bot.user}')
     send_reminders.start()
-
 
 ########################################################################
 # Bot Startup Sequence
