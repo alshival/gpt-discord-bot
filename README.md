@@ -20,33 +20,30 @@ Prompts and Responses are stored in the sqlite database `data.db` under the `pro
 
 This version also includes a `!reminder` function for scheduling reminders. 
 
-```
-!reminder 2023-05-16 14:15 Take a break!
-```
-
 These reminders are stored in the sqlite database `data.db` under the `reminders` table.
 
 Currently, memory support is not available with `!chatGPT`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
 
 Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
 
+# Usage
+
+To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
+
+For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
+
+To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
+
+```
+!reminder 2023-05-16 14:15 Take a break!
+```
+
+In the next photo, we see the bot in action. We use the bot to schedule a reminder to take a break using the `!reminder` command. Then we ask a question using `!chatGPT` and access the memory of the conversation via `!chatGPTturbo`. [We are working on scheduling reminders using natural language.]
+
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="75%" height="75%">
 </p>
 
-# Usage
-To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
-
-<p align="center">
-    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%204.16.58%20AM.png?raw=true">
-</p>
-
-For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
-
-<p align="center">
-    <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-05%2011.50.53%20PM.png?raw=true">
-</p>
-A little side note... Salski and I prefer using USB ports or RJ-45... but as they say, to each their own.
 
 Here's a case study: A data science student sought my help on UpWork for their homework. I assisted them with their graph theory problems, then suggested they use GPT for the remaining probability and calculus problems. Knowing GPT's capabilities, I recommended them to form a study group and gave them a link to this bot. It proved to be an excellent tutoring tool, and also a cost-effective solution for the students.
 
