@@ -8,9 +8,10 @@
 ########################################################################
 
 import discord
-from discord.ext import commands
+from discord.ext import commands,tasks
 import openai
 import os
+from datetime import datetime
 import sqlite3
 import aiosqlite
 import asyncio
@@ -27,9 +28,10 @@ bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 ########################################################################
 # Boot Sequence for the Bot
 ########################################################################
+#-----------------------------------------------------------------------
 # This function creates a table named 'prompts' in the SQLite database 'data.db' upon bot startup.
 # The table is used to store the bot's conversation history.
-# The table has fields for id, user_id, prompt, model, response, channel_name, and timestamp.
+# The table has fields for id, username, prompt, model, response, channel_name, and timestamp.
 async def create_table():
     # Connect to the SQLite3 database named 'data.db'
     conn = await aiosqlite.connect('data.db')
@@ -38,7 +40,7 @@ async def create_table():
     # Create the 'prompts' table if it doesn't already exist
     await cursor.execute('''CREATE TABLE IF NOT EXISTS prompts
                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  user_id TEXT NOT NULL,
+                  username TEXT NOT NULL,
                   prompt TEXT NOT NULL,
                   model TEXT,
                   response TEXT,
@@ -51,6 +53,27 @@ async def create_table():
     
 # The 'create_table' function is called using the asyncio event loop when the bot starts up.
 asyncio.get_event_loop().run_until_complete(create_table())
+#-----------------------------------------------------------------------
+# 'create_reminder_table' function creates a new table named 'reminders' in the SQLite database 'data.db'.
+# This table is used to store reminders set by users.
+# The table has fields for id, username, message, channel_name, and reminder_time.
+
+async def create_reminder_table():
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    await cursor.execute('''CREATE TABLE IF NOT EXISTS reminders
+                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  username TEXT NOT NULL,
+                  reminder TEXT NOT NULL,
+                  channel_id TEXT NOT NULL,
+                  channel_name TEXT NOT NULL,
+                  reminder_time TIMESTAMP NOT NULL)''')
+
+    await conn.commit()
+    await conn.close()
+
+asyncio.get_event_loop().run_until_complete(create_reminder_table())
 
 #-----------------------------------------------------------------------
 # This function is used to fetch past conversations from the 'prompts' table.
@@ -94,18 +117,61 @@ asyncio.get_event_loop().run_until_complete(update_cache())
 async def create_connection():
     return await aiosqlite.connect('data.db')
 
+#-----------------------------------------------------------------------
 # This function is used to store a new conversation in the 'prompts' table.
-# It inserts a new row with the user_id, prompt, model, response, and channel_name into the table.
-async def store_prompt(db_conn, user_id, prompt, model, response, channel_name):
+# It inserts a new row with the username, prompt, model, response, and channel_name into the table.
+async def store_prompt(db_conn, username, prompt, model, response, channel_name):
     async with db_conn.cursor() as cursor:
-        await cursor.execute('INSERT INTO prompts (user_id, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (user_id, prompt, model, response, channel_name))
+        await cursor.execute('INSERT INTO prompts (username, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (username, prompt, model, response, channel_name))
         await db_conn.commit()
+
+#-----------------------------------------------------------------------
+# 'fetch_due_reminders' function fetches all reminders that are due to be sent.
+# It selects all reminders from the 'reminders' table where the reminder_time is less than or equal to the current timestamp.
+
+async def fetch_due_reminders():
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    await cursor.execute('SELECT id, username, reminder, channel_id, channel_name FROM reminders WHERE reminder_time <= CURRENT_TIMESTAMP')
+    reminders = await cursor.fetchall()
+
+    await conn.close()
+
+    return reminders
+
+#-----------------------------------------------------------------------
+# 'delete_reminder' function deletes a reminder from the 'reminders' table.
+# It takes the id of the reminder to be deleted as an argument.
+
+async def delete_reminder(reminder_id):
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    await cursor.execute('DELETE FROM reminders WHERE id = ?', (reminder_id,))
+    await conn.commit()
+    await conn.close()
+
+#-----------------------------------------------------------------------
+# 'add_reminder' function is used to add a new reminder to the 'reminders' table.
+# It takes username, message, channel_name, and reminder_time as arguments and inserts a new row into the table.
+
+async def add_reminder(username, reminder, channel_id, channel_name, reminder_time):
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    await cursor.execute('INSERT INTO reminders (username, reminder, channel_id, channel_name, reminder_time) VALUES (?, ?, ?, ?, ?)',
+                         (username, reminder, channel_id, channel_name, reminder_time))
+    await conn.commit()
+    await conn.close()
 
 ########################################################################
 # Discord Command Definitions
 ########################################################################
 # The bot responds to two commands: '!chatGPT' and '!chatGPTturbo'.
 # You can customize the names of these commands by changing the names in the '@bot.command()' decorators.
+# UPDATE: 2023-05-16 - Third function added: `!reminder YYYY-MM-DD 2:56 TAKE A BREAK!`
+
 #-----------------------------------------------------------------------
 # The '!chatGPT' command generates a response using the 'text-davinci-002' model.
 # It fetches the last four prompts and responses from the database, and then generates a new response.
@@ -114,7 +180,7 @@ async def chatGPT(ctx, *, prompt):
     model = "text-davinci-002"
     
     db_conn = await create_connection()
-    user_id = ctx.author.id
+    username = ctx.author.name
     
     channel_name = ctx.channel.name
     # Past prompts not compatible with openai.Completion.create, 
@@ -138,7 +204,7 @@ async def chatGPT(ctx, *, prompt):
         await ctx.send("I'm sorry, I don't have a response for that.")
 
     # Store the new prompt and response in the 'prompts' table
-    await store_prompt(db_conn, user_id, prompt, model, response_text, channel_name)
+    await store_prompt(db_conn, username, prompt, model, response_text, channel_name)
     await db_conn.close()
 #-----------------------------------------------------------------------
 # The '!chatGPTturbo' command generates a response using the 'gpt-3.5-turbo' model.
@@ -148,7 +214,7 @@ async def chatGPTturbo(ctx, *, message):
     model = "gpt-3.5-turbo"
     
     db_conn = await create_connection()
-    user_id = ctx.author.id
+    username = ctx.author.name
     
     channel_name = ctx.channel.name
     past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
@@ -176,8 +242,77 @@ async def chatGPTturbo(ctx, *, message):
     await ctx.send(response_text)
 
     # Store the new prompt and response in the 'prompts' table
-    await store_prompt(db_conn, user_id, message, model, response_text, channel_name)
+    await store_prompt(db_conn, username, message, model, response_text, channel_name)
     await db_conn.close()
+
+#-----------------------------------------------------------------------
+# '!reminder' command sets a new reminder.
+# It takes date, hour, minute, and message as arguments, converts the date and time to a datetime object, 
+# and then calls the 'add_reminder' function to add the new reminder to the database.
+
+@bot.command()
+async def reminder(ctx, date: str, time: str, *, message: str):
+    # Split the time string into hour and minute
+    hour, minute = map(int, time.split(':'))
+
+    # Convert the date and time to a datetime object
+    reminder_time = datetime.strptime(f"{date} {hour}:{minute}", "%Y-%m-%d %H:%M")
+
+    # If the reminder time is in the past, send an error message
+    if reminder_time < datetime.now():
+        await ctx.send("Cannot set a reminder for a past time.")
+        return
+
+    # Add the new reminder to the database
+    await add_reminder(ctx.author.name, message, ctx.channel.id, ctx.channel.name, reminder_time)
+
+    # Send a confirmation message
+    await ctx.send(f"Reminder set for {reminder_time.strftime('%Y-%m-%d %H:%M')}.")
+
+#-----------------------------------------------------------------------
+# The 'send_reminders' function is a looping task that runs every minute.
+# It fetches all reminders from the 'reminders' table in the SQLite database.
+# For each reminder, it checks if the current time is equal to or past the reminder time.
+# If it is, the bot sends a message in the appropriate channel mentioning the user and the reminder text.
+# After the reminder is sent, it is deleted from the 'reminders' table.
+# This function ensures that all reminders are sent at the correct times.
+
+@tasks.loop(minutes=1)
+async def send_reminders():
+    # Connect to the SQLite3 database named 'data.db'
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    # Select all reminders from the 'reminders' table
+    await cursor.execute('SELECT username, reminder, channel_id, channel_name, reminder_time FROM reminders')
+    reminders = await cursor.fetchall()
+
+    for reminder in reminders:
+        username, reminder_text, channel_id, channel_name, reminder_time = reminder
+        # Convert the string reminder_time to a datetime object
+        reminder_time = datetime.strptime(reminder_time, "%Y-%m-%d %H:%M:00")
+
+        # Check if the current time is past the reminder time
+        if datetime.now() >= reminder_time:
+            # If it is, get the user and channel and send the reminder
+            channel = bot.get_channel(int(channel_id))
+            await channel.send(f"<@{username}>, you set a reminder: {reminder_text}")
+
+            # Then delete the reminder from the database
+            await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?', (username, reminder_time.strftime("%Y-%m-%d %H:%M:00")))
+            await conn.commit()
+
+    # Close the connection
+    await conn.close()
+
+#-----------------------------------------------------------------------
+# 'on_ready' function is an event handler that runs after the bot has connected to the server.
+# It starts the 'send_reminders' loop.
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+    send_reminders.start()
+
 
 ########################################################################
 # Bot Startup Sequence
