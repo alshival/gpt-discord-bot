@@ -43,7 +43,7 @@ To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 !reminder 2023-05-16 14:15 Take a break!
 ```
 
-or use natural language with `chatGPTturbo`.
+or use natural language with `chatGPTturbo`:
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-16%204.31.05%20PM.png?raw=true" width="75%" height="75%">
