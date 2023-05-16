@@ -27,8 +27,11 @@ Currently, memory support is not available with `!chatGPT`. The `!GPT4` command 
 Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
 
 # Usage
+
 To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
+
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
+
 To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 
 ```
