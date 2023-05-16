@@ -4,7 +4,7 @@
     
 # GPT-Discord-Bot Starter Code
 
-Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://alshival.com). This code utilizes [OpenAI](https://openai.com/) and keras to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
+Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
 
   * `text-davinci-002`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
