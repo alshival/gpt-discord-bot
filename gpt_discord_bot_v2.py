@@ -38,7 +38,7 @@ async def create_table():
     # Create the 'prompts' table if it doesn't already exist
     await cursor.execute('''CREATE TABLE IF NOT EXISTS prompts
                   (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  user_id INTEGER NOT NULL,
+                  user_id TEXT NOT NULL,
                   prompt TEXT NOT NULL,
                   model TEXT,
                   response TEXT,
