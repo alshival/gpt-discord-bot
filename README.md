@@ -10,6 +10,25 @@ Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Servi
   * `text-davinci-002`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
 
+# Usage
+
+To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
+
+For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
+
+To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
+
+```
+!reminder 2023-05-16 14:15 Take a break!
+```
+
+or use natural language with `chatGPTturbo`:
+
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-16%204.31.05%20PM.png?raw=true" width="75%" height="75%">
+</p>
+
+
 We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
 
 For assistance in building more complex bots, integrating the bot with your data using a fine-tuned model, or training it for document search, please visit [Alshival.com](https://alshival.com).
@@ -31,30 +50,7 @@ Currently, memory support is not available with `!chatGPT`. The `!GPT4` command 
 
 Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
 
-# Usage
-
-To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
-
-For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
-
-To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
-
-```
-!reminder 2023-05-16 14:15 Take a break!
-```
-
-or use natural language with `chatGPTturbo`:
-
-<p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-16%204.31.05%20PM.png?raw=true" width="75%" height="75%">
-</p>
-
-In the next photo, we see the bot in action. We use the bot to schedule a reminder to take a break using the `!reminder` command. Then we ask a question using `!chatGPT` and access the memory of the conversation via `!chatGPTturbo`. [We are working on scheduling reminders using natural language.]
-
-<p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="75%" height="75%">
-</p>
-
+# Case Study
 
 Here's a case study: A data science student sought my help on UpWork for their homework. I assisted them with their graph theory problems, then suggested they use GPT for the remaining probability and calculus problems. Knowing GPT's capabilities, I recommended them to form a study group and gave them a link to this bot. It proved to be an excellent tutoring tool, and also a cost-effective solution for the students.
 
