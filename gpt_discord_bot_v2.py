@@ -296,7 +296,7 @@ async def send_reminders():
         if datetime.now() >= reminder_time:
             # If it is, get the user and channel and send the reminder
             channel = bot.get_channel(int(channel_id))
-            await channel.send(f"<@{username}>, you set a reminder: {reminder_text}")
+            await channel.send(f"@{username}, you set a reminder: {reminder_text}")
 
             # Then delete the reminder from the database
             await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?', (username, reminder_time.strftime("%Y-%m-%d %H:%M:00")))
