@@ -127,7 +127,7 @@ async def chatGPT(ctx, *, prompt):
         prompt=prompt,
         max_tokens=1024,
         n=1,
-        stop="\n\n",
+        stop=None,
         temperature=0.7,
     )
     # Send the response back to the user
