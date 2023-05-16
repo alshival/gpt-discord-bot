@@ -1,3 +1,6 @@
+    * TO DO: Change from `!chatGPTturbo` to `!GPT3`.
+    * TO DO: Fix `!label_last` command. This allows us to quickly label prompts that the keras layer may have misclassified and store them in a database. This data will then be used to train the keras layer when the bot boots up again.
+    
 # GPT-Discord-Bot Starter Code
 
 Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://alshival.com). This code utilizes [OpenAI](https://openai.com/) to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
