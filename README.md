@@ -105,7 +105,7 @@ Install the necessary dependencies via the command line:
 pip install discord openai datetime json sqlite3 aiosqlite asyncio numpy tensorflow
 ```
 
-For the basic bot `gpt_discord_bot.py`, you only need to install the following packages:
+For the basic bot without memory capabilities (`gpt_discord_bot.py`), you only need to install the following packages:
 
 ```
 pip install discord openai
