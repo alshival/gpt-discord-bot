@@ -4,7 +4,8 @@
     
 # GPT-Discord-Bot Starter Code
 
-Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
+Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+Currently, we've implemented two models:
 
   * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
@@ -13,9 +14,12 @@ We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is desi
 
 # Usage
 
+
 To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
 
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
+
+In order to minimize reliance on openAi, a keras layer for relaying requests was added. This is what allows our bot to create reminders using natural language. 
 
 To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 
