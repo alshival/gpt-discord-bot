@@ -106,13 +106,13 @@ Make your changes and hit Ctrl+X to save and close.
 Launch your bot by executing the following command in your terminal:
 
 ```
+python3 gpt_discord_bot_v2.py
+```
+
+or for the basic bot without memory capabilities:
+
+```
 python gpt_discord_bot.py
-```
-
-Or for version 2:
-
-```
-python gpt_discord_bot_v2.py
 ```
 
 Congratulations! Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, then choosing the text permissions you need, and finally, copying the generated OAuth2 URL into your browser.
