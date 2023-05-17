@@ -86,7 +86,7 @@ In order for the bot to respond, it must be running on a machine such as a cloud
 ### Step 0
 You'll need a Python installation (students, we suggest getting JupyterLab as well) and an [OpenAI API key](https://platform.openai.com/account/api-keys).
 
-Install the required dependencies here:
+Install the required dependencies from the command line:
 ```
 pip install discord openai os datetime sqlite3 aiosqlite asyncio json
 ```
