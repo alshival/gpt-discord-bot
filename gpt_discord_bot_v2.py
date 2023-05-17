@@ -6,6 +6,10 @@
 # It utilizes the OpenAI API and SQLite3 database to store and retrieve 
 # past conversations. 
 ########################################################################
+# Define setup variables here
+epochs = 25
+prompt_table_cache_size = 200
+########################################################################
 
 import discord
 from discord.ext import commands,tasks
@@ -206,7 +210,7 @@ async def train_keras():
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
     # Train the model
-    model.fit(X, y, epochs=25, batch_size=1, verbose=1)
+    model.fit(X, y, epochs=epochs, batch_size=1, verbose=1)
 
 # Train the model when the bot starts up.
 asyncio.get_event_loop().run_until_complete(train_keras())
@@ -274,7 +278,9 @@ async def create_reminder_table():
                   channel_id TEXT NOT NULL,
                   channel_name TEXT NOT NULL,
                   reminder_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
-
+    # Delete reminders that build up each time the bot boots.
+    # Clear out rows with null reminder_time
+    await cursor.execute("DELETE FROM reminders WHERE reminder_time IS NULL")
     await conn.commit()
     await conn.close()
 
@@ -313,8 +319,8 @@ async def fetch_prompts(db_conn, channel_name, limit):
         return await cursor.fetchall()
     
 #-----------------------------------------------------------------------
-# This function ensures the bot's memory usage remains low by maintaining a maximum of 200 responses in the database.
-# It deletes the oldest entries if the count exceeds 200.
+# This function ensures the bot's memory usage remains low by maintaining a maximum of prompt_table_cache_size responses in the database.
+# It deletes the oldest entries if the count exceeds prompt_table_cache_size.
 # This function is also called upon bot startup.
 # You can customize the maximum number of entries by changing the 'max_rows' variable.
 async def update_cache():
@@ -325,7 +331,7 @@ async def update_cache():
     # Fetch the total number of entries in the 'prompts' table
     await cursor.execute('SELECT COUNT(*) FROM prompts')
     count = (await cursor.fetchall())[0][0]
-    max_rows = 200  # Change this value to customize the maximum number of entries.
+    max_rows = prompt_table_cache_size 
 
     # Delete the oldest entries if the total count exceeds the maximum limit
     if count >= max_rows:
@@ -611,7 +617,7 @@ async def send_reminders():
     cursor = await conn.cursor()
 
     # Select all reminders from the 'reminders' table
-    await cursor.execute('SELECT username, reminder, channel_id, channel_name, reminder_time FROM reminders')
+    await cursor.execute('SELECT username, reminder, channel_id, channel_name, reminder_time FROM reminders WHERE reminder_time is not null')
     reminders = await cursor.fetchall()
 
     for reminder in reminders:
