@@ -1,6 +1,6 @@
     * TO DO: Start on v3, improving on v2.
     * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
-    * TO DO: Add ability to reschedule reminders.
+    * TO DO: Add ability to reschedule and cancel reminders.
     * TO DO: Consider a Federated Learning Model for the keras layer.
     
 # GPT-Discord-Bot Starter Code
