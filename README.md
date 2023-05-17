@@ -86,11 +86,6 @@ In order for the bot to respond, it must be running on a machine such as a cloud
 ### Step 0
 You'll need a Python installation (students, we suggest getting JupyterLab as well) and an [OpenAI API key](https://platform.openai.com/account/api-keys).
 
-Install the required dependencies from the command line:
-```
-pip install discord openai os datetime sqlite3 aiosqlite asyncio json
-```
-
 ### Step 1
 Create a Discord account if you haven't already.
 
@@ -104,10 +99,10 @@ Create a bot for your Discord application by clicking on the "Bot" tab and then 
 Generate a token for your bot by clicking on the "Copy" button next to "Token" under the bot's name. Keep this token secure as it's needed to authenticate your bot with the Discord API.
 
 ### Step 5
-Install the necessary dependencies, which are the Discord.py and OpenAI Python modules. Install them via pip by running the following command in your terminal:
+Install the necessary dependencie. Install them via pip by running the following command in your terminal:
 
 ```
-pip install discord.py openai
+pip install discord openai os datetime sqlite3 aiosqlite asyncio json
 ```
 
 ### Step 6
