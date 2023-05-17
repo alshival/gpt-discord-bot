@@ -1,5 +1,5 @@
     * TO DO: Start on v3, improving on v2.
-    * TO DO: Change from `!chatGPTturbo` to `!gpt3`.
+    * TO DO: Change from `!gpt3` to `!gpt3`.
     * TO DO: Fix `!label_last` command. This allows us to quickly label prompts that the keras layer may have misclassified and store them in the `labeled_prompts` table. This data will then be used to train the keras layer when the bot boots up again.
     * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
     * TO DO: Clean up code. Get rid of `eval` hack with something a bit more stable.
@@ -8,14 +8,14 @@
 
 Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
 
-  * `text-davinci-002`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
+  * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
 
 # Usage
 
-To use `text-davinci-002` in Discord, prefix your request with `!chatGPT`.
+To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
 
-For `gpt-3.5-turbo` usage in Discord, prefix your request with `!chatGPTturbo`.
+For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
 
 To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 
@@ -23,7 +23,7 @@ To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 !reminder 2023-05-16 14:15 Take a break!
 ```
 
-or use natural language with `chatGPTturbo`:
+or use natural language with `gpt3`:
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-16%204.31.05%20PM.png?raw=true" width="75%" height="75%">
@@ -38,10 +38,10 @@ For assistance in building more complex bots, integrating the bot with your data
 
 Remember, while using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases.
 
-Please note that the basic bot does not remember conversations. Also, the `!chatGPTturbo` command might take a few seconds to execute.
+Please note that the basic bot does not remember conversations. Also, the `!gpt3` command might take a few seconds to execute.
 
 ## **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
-We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!chatGPTturbo` by integrating a SQLite3 database for memory storage, enabling the bot to maintain memories of conversations within a channel. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!chatGPT`, then continue the conversation using `!chatGPTturbo`. These settings can be adjusted in the code.
+We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!gpt3` by integrating a SQLite3 database for memory storage, enabling the bot to maintain memories of conversations within a channel. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!davinci3`, then continue the conversation using `!gpt3`. These settings can be adjusted in the code.
 
 Prompts and Responses are stored in the sqlite database `data.db` under the `prompts` table.
 
@@ -49,7 +49,7 @@ This version also includes a `!reminder` function for scheduling reminders.
 
 These reminders are stored in the sqlite database `data.db` under the `reminders` table.
 
-Currently, memory support is not available with `!chatGPT`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
+Currently, memory support is not available with `!davinci3`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
 
 Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
 
