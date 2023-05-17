@@ -83,6 +83,7 @@ In order for the bot to respond, it must be running on a machine such as a cloud
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="50%" height="50%">
 </p>
 
+### Step 0
 You'll need a Python installation (students, we suggest getting JupyterLab as well) and an [OpenAI API key](https://platform.openai.com/account/api-keys).
 
 ### Step 1
