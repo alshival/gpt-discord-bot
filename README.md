@@ -4,7 +4,8 @@
     
 # GPT-Discord-Bot Starter Code
 
-Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. Currently, we've implemented two models:
+Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+Currently, we've implemented two models:
 
   * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
@@ -13,9 +14,20 @@ We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is desi
 
 # Usage
 
+
 To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
 
+```
+!davinci3 What are some historical events that took place in 1279?
+```
+
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
+
+```
+!gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more serial port...)
+```
+
+In order to minimize reliance on openAi, a keras layer for relaying requests was added. This is what allows our bot to create reminders using natural language. 
 
 To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 
@@ -39,7 +51,7 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 ```
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%205.30.37%20AM.png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
 </p>
 
 This will allow you to label your last prompt. `label_last` is user and channel specific.
@@ -48,22 +60,12 @@ For those of you who would like us to host your bot, or if you would like custom
 
 For assistance in building more complex bots, integrating the bot with your data using a fine-tuned model, or training it for document search, please visit [Alshival.com](https://Alshival.com).
 
-Remember: while using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases.
-
-Please note that the basic bot does not remember conversations. Also, the `!gpt3` command might take a few seconds to execute.
-
-## **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
-We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!gpt3` by integrating a SQLite3 database for memory storage, enabling the bot to maintain memories of conversations within a channel. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!davinci3`, then continue the conversation using `!gpt3`. These settings can be adjusted in the code.
-
-Prompts and Responses are stored in the sqlite database `data.db` under the `prompts` table.
-
-This version also includes a `!reminder` function for scheduling reminders. 
-
-These reminders are stored in the sqlite database `data.db` under the `reminders` table.
-
-Currently, memory support is not available with `!davinci3`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
-
-Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
+<sup><sub>
+Disclaimer: Alshival's Data Service is not affiliated with Kiki's Delivery Service. <br>
+Discord is great, though may not satisfy requirements set by data privacy laws, such as for Q&A bots for legal or medical documents. In these cases, a self-hosted front-end solution may be required. Visit [Alshival's Data Service](https://alshival.com) for more information. <br>
+Note that the `!gpt3` command might take a few seconds to execute. Note that Discord imposes a 2,000-character limit for inputs. Note further this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. <br>
+Therefore, note that historical messages might lead you to hit this limit.
+</sup></sub>
 
 # Case Study
 
@@ -116,13 +118,13 @@ Make your changes and hit Ctrl+X to save and close.
 Launch your bot by executing the following command in your terminal:
 
 ```
+python3 gpt_discord_bot_v2.py
+```
+
+or for the basic bot without memory capabilities:
+
+```
 python gpt_discord_bot.py
-```
-
-Or for version 2:
-
-```
-python gpt_discord_bot_v2.py
 ```
 
 Congratulations! Your bot should now be up and running! You can invite it to your Discord server by going back to the Discord Developer Portal, selecting your application, clicking on the "OAuth2" tab, selecting the "bot" scope, then choosing the text permissions you need, and finally, copying the generated OAuth2 URL into your browser.
