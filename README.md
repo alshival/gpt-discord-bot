@@ -35,7 +35,11 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 !label_last other
 ```
 
-This will allow you to label your last prompt. This is user and channel specific.
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%205.07.33%20AM.png?raw=true" width="75%" height="75%">
+</p>
+
+This will allow you to label your last prompt. `label_last` is user and channel specific.
 
 For those of you who would like us to host your bot, or if you would like customized solutions, visit our little shop: [Alshival.com](https://Alshival.com).
 
@@ -63,10 +67,6 @@ Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, t
 Here's a case study: A data science student sought my help on UpWork for their homework. I assisted them with their graph theory problems, then suggested they use GPT for the remaining probability and calculus problems. Knowing GPT's capabilities, I recommended them to form a study group and gave them a link to this bot. It proved to be an excellent tutoring tool, and also a cost-effective solution for the students.
 
 The beauty of learning AI is that you can use AI itself to facilitate your learning. As a mathematician, I was amazed by the proficiency of these models. After verifying a few results, I felt confident enough to recommend it to the students.
-
-<p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-12%202.37.22%20AM.png?raw=true" width="50%" height="50%">
-</p>
 
 # Installation
 
