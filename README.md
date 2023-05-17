@@ -102,7 +102,13 @@ Generate a token for your bot by clicking on the "Copy" button next to "Token" u
 Install the necessary dependencies via the command line:
 
 ```
-pip install discord openai os datetime sqlite3 aiosqlite asyncio json numpy tensorflow
+pip install discord openai datetime json sqlite3 aiosqlite asyncio numpy tensorflow
+```
+
+For the basic bot `gpt_discord_bot.py`, you only need to install the following packages:
+
+```
+pip install discord openai
 ```
 
 ### Step 6
