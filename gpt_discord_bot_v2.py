@@ -376,10 +376,15 @@ async def add_reminder(username, reminder, channel_id, channel_name, reminder_ti
     await conn.close()
     
 #----------------------------------------------------------------------
-async def label_last_prompt(db_conn, label):
+async def label_last_prompt(ctx,db_conn, label):
     async with db_conn.cursor() as cursor:
-        await cursor.execute(f"SELECT * FROM prompts where channel_name = '{channel_name}'ORDER BY id DESC LIMIT 1")
-        last_row = cursor.fetchone()
+        await cursor.execute(f"""
+        SELECT * FROM prompts 
+        where channel_name = '{ctx.channel.name}' 
+            AND username = '{ctx.author.name}'
+        ORDER BY id DESC LIMIT 1
+        """)
+        last_row = await cursor.fetchone()
        # If last_row is not None, insert its data into 'labeled_prompts'
         if last_row is not None:
             insert_query = '''INSERT INTO labeled_prompts (id, username, prompt, model, response, channel_name, timestamp,label)
@@ -389,23 +394,6 @@ async def label_last_prompt(db_conn, label):
             await cursor.execute(insert_query, data_tuple)
             await db_conn.commit()
             
-async def label_last_prompt(db_conn, username, prompt, model, response, channel_name):
-    async with db_conn.cursor() as cursor:
-        # get last row
-        await cursor.execute(f"SELECT * FROM prompts where channel_name = '{channel_name}'ORDER BY id DESC LIMIT 1")
-        last_row = cursor.fetchone()
-
-        await cursor.execute('INSERT INTO prompts (username, prompt, model, response, channel_name) VALUES (?, ?, ?, ?, ?)', (username, prompt, model, response, channel_name))
-        if last_row is not None:
-            insert_query = '''INSERT INTO labeled_prompts 
-            (id, username, prompt, model, 
-            response, channel_name, timestamp,label
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
-
-            data_tuple = last_row + (label,)  # Add label to the tuple
-
-            await cursor.execute(insert_query, data_tuple)
-            await db_conn.commit()
 # Ignore this chunk
 # async def store_prompt(db_conn, username, prompt, model, response, channel_name):
 #     async with db_conn.cursor() as cursor:
@@ -415,16 +403,16 @@ async def label_last_prompt(db_conn, username, prompt, model, response, channel_
 ########################################################################
 # Discord Command Definitions
 ########################################################################
-# The bot responds to two commands: '!chatGPT' and '!chatGPTturbo'.
+# The bot responds to two commands: '!davinci3' and '!gpt3'.
 # You can customize the names of these commands by changing the names in the '@bot.command()' decorators.
 # UPDATE: 2023-05-16 - Third function added: `!reminder YYYY-MM-DD 2:56 TAKE A BREAK!`
 
 #-----------------------------------------------------------------------
-# The '!chatGPT' command generates a response using the 'text-davinci-002' model.
+# The '!davinci3' command generates a response using the 'text-davinci-002' model.
 # It fetches the last four prompts and responses from the database, and then generates a new response.
 @bot.command()
-async def chatGPT(ctx, *, prompt):
-    model = "text-davinci-002"
+async def davinci3(ctx, *, prompt):
+    model = "text-davinci-003"
     
     db_conn = await create_connection()
     username = ctx.author.name
@@ -454,10 +442,10 @@ async def chatGPT(ctx, *, prompt):
     await store_prompt(db_conn, username, prompt, model, response_text, channel_name)
     await db_conn.close()
 #-----------------------------------------------------------------------
-# The '!chatGPTturbo' command generates a response using the 'gpt-3.5-turbo' model.
-# Similar to the '!chatGPT' command, it fetches the last four prompts and responses, and then generates a new response.
+# The '!gpt3' command generates a response using the 'gpt-3.5-turbo' model.
+# Similar to the '!davinci3' command, it fetches the last four prompts and responses, and then generates a new response.
 @bot.command()
-async def chatGPTturbo(ctx, *, message):
+async def gpt3(ctx, *, message):
 
     model = "gpt-3.5-turbo"
     
@@ -574,14 +562,19 @@ async def reminder(ctx, date: str, time: str, *, message: str):
 #-----------------------------------------------------------------------
 # '!label_last' command to correctly label the last prompt.
 @bot.command()
-async def label_last(ctx, label: str):
+async def label_last(ctx,label):
     # Verify the label
+    print(label)
     if label not in ['reminder', 'other']:
         await ctx.send("Invalid label. Please use 'reminder' or 'other'.")
         return
     db_conn = await create_connection()
     channel_name = ctx.channel.name
     
+    # label_last_prompt
+    await label_last_prompt(ctx,db_conn,label)
+        
+
     await ctx.send(f"Last promped labeled as: {label}")
 
 #-----------------------------------------------------------------------
