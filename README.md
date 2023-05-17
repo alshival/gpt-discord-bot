@@ -54,7 +54,7 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
 </p>
 
-I meant parallel port. No more parallel ports.
+I meant parallel port... No more parallel ports...
 
 `label_last` is user and channel specific. Let us know if you run into any bugs by submitting a [new issue](https://github.com/alshival/gpt-discord-bot/issues).
 
