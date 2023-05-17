@@ -28,7 +28,7 @@ or use natural language with `gpt3`:
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-16%204.31.05%20PM.png?raw=true" width="75%" height="75%">
 </p>
 
-If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
+If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles or gives you a generated answer, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
 
 ```
 !label_last reminder
