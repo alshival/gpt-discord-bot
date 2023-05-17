@@ -17,7 +17,15 @@ We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is desi
 
 To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
 
+```
+!davinci3 What are some historical events that took place in 1279?
+```
+
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
+
+```
+!gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more serial port...)
+```
 
 In order to minimize reliance on openAi, a keras layer for relaying requests was added. This is what allows our bot to create reminders using natural language. 
 
