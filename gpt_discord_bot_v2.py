@@ -634,8 +634,10 @@ async def send_reminders():
             # Then delete the reminder from the database
             await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?', (username, reminder_time))
             await conn.commit()
-
+    # Clear out rows with null reminder_time
+    await cursor.execute("DELETE FROM reminders WHERE reminder_time IS NULL")
     # Close the connection
+    await conn.commit()
     await conn.close()
 
 #-----------------------------------------------------------------------
