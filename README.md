@@ -1,7 +1,7 @@
     * TO DO: Change from `!chatGPTturbo` to `!gpt3`.
     * TO DO: Fix `!label_last` command. This allows us to quickly label prompts that the keras layer may have misclassified and store them in the `labeled_prompts` table. This data will then be used to train the keras layer when the bot boots up again.
     * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
-    * TO DO: Clean up code. Get rid of `eval` hack with something a bit more stable and secure.
+    * TO DO: Clean up code. Get rid of `eval` hack with something a bit more stable.
     
 # GPT-Discord-Bot Starter Code
 
