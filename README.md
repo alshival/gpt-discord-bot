@@ -52,17 +52,6 @@ Remember: while using this bot, data privacy laws may apply in certain cases lik
 
 Please note that the basic bot does not remember conversations. Also, the `!gpt3` command might take a few seconds to execute.
 
-## **Update 2023-05-15: `gpt_discord_bot_v2.py`** 
-We've upgraded our `gpt_discord_bot.py` to `gpt_discord_bot_v2.py`. This version enhances `!gpt3` by integrating a SQLite3 database for memory storage, enabling the bot to maintain memories of conversations within a channel. It stores up to 200 interactions, but this can be customized. The bot now recalls the last four interactions, regardless of the submitter or the model used. This means you can use `!davinci3`, then continue the conversation using `!gpt3`. These settings can be adjusted in the code.
-
-Prompts and Responses are stored in the sqlite database `data.db` under the `prompts` table.
-
-This version also includes a `!reminder` function for scheduling reminders. 
-
-These reminders are stored in the sqlite database `data.db` under the `reminders` table.
-
-Currently, memory support is not available with `!davinci3`. The `!GPT4` command will be incorporated once GPT-4 exits the beta phase, providing enhanced memory capabilities.
-
 Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
 
 # Case Study
