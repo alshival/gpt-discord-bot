@@ -8,6 +8,8 @@ Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Servi
   * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
 
+We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
+
 # Usage
 
 To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
@@ -26,14 +28,18 @@ or use natural language with `gpt3`:
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-16%204.31.05%20PM.png?raw=true" width="75%" height="75%">
 </p>
 
+If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles, add include the last prompt you gave the bot along with one of the following labels: `reminder` or `other`.
 
-We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
+```
+!label_last reminder
+!label_last other
+```
 
 For those of you who would like us to host your bot, or if you would like customized solutions, visit our little shop: [Alshival.com](https://Alshival.com).
 
 For assistance in building more complex bots, integrating the bot with your data using a fine-tuned model, or training it for document search, please visit [Alshival.com](https://Alshival.com).
 
-Remember, while using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases.
+Remember: while using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases.
 
 Please note that the basic bot does not remember conversations. Also, the `!gpt3` command might take a few seconds to execute.
 
