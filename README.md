@@ -76,7 +76,7 @@ The beauty of learning AI is that you can use AI itself to facilitate your learn
 # Installation
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="50%" height="50%">
 </p>
 
 
