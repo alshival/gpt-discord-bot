@@ -99,7 +99,7 @@ Create a bot for your Discord application by clicking on the "Bot" tab and then 
 Generate a token for your bot by clicking on the "Copy" button next to "Token" under the bot's name. Keep this token secure as it's needed to authenticate your bot with the Discord API.
 
 ### Step 5
-Install the necessary dependencie. Install them via pip by running the following command in your terminal:
+Install the necessary dependencies via the command line:
 
 ```
 pip install discord openai os datetime sqlite3 aiosqlite asyncio json numpy tensorflow
