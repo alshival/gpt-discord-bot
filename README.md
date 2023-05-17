@@ -48,11 +48,10 @@ For those of you who would like us to host your bot, or if you would like custom
 
 For assistance in building more complex bots, integrating the bot with your data using a fine-tuned model, or training it for document search, please visit [Alshival.com](https://Alshival.com).
 
-Remember: while using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases.
-
-Please note that the basic bot does not remember conversations. Also, the `!gpt3` command might take a few seconds to execute.
-
-Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
+<sup><sub>
+Disclaimer: Alshival's Data Service is not affiliated with Kiki's Delivery Service. 
+While using this bot, data privacy laws may apply in certain cases like Q&A bots for legal or medical documents. A self-hosted solution would be required rather than Discord for such use cases. Note that the basic bot does not remember conversations. Also, the `!gpt3` command might take a few seconds to execute. Bear in mind, Discord imposes a 2,000-character limit for inputs. Please note, this bot doesn't check for token limits due to the incompatibility of the `tiktoken` package with newer Python versions on certain platforms, like the one installed on my Chromebook. Including historical messages might lead you to hit this limit.
+</sup></sub>
 
 # Case Study
 
