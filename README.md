@@ -28,7 +28,7 @@ or use natural language with `gpt3`:
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="75%" height="75%">
 </p>
 
-Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is intentional.
+Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is a benefit of using the SQLite3 database.
 
 If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles or gives you a generated answer, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
 
