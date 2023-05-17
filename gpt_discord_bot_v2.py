@@ -160,21 +160,39 @@ async def train_keras():
         'other','reminder','other','reminder','other','reminder','other',
         'reminder','other','reminder','other','reminder','other','reminder',
         'other','other']
-
-
+    #---------------------------------------------
+    # Check if `data.db` has labeled_prompts table
+    conn = sqlite3.connect('data.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    # Execute the query to retrieve the table names
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    tables = cursor.fetchall()
+    tables = [table[0] for table in tables]
+    if 'labeled_prompts' in tables:
+        cursor.execute("select prompt,label from labeled_prompts")
+        rows = cursor.fetchall()
+        if rows is not None:
+            dict_rows = [dict(row) for row in rows]
+            messages += [row['prompt'] for row in dict_rows]
+            labels += [row['label'] for row in dict_rows]
+        
+    conn.close()
+    
+    #---------------------------------------------
     # Preprocessing
     vocab = set(' '.join(messages).lower().split())
     vocab_size = len(vocab)
     word_to_index = {word: index for index, word in enumerate(vocab)}
     max_sequence_length = max(len(message.split()) for message in messages)
-
+    #---------------------------------------------
     # Convert sentences to numerical sequences
     X = np.zeros((len(messages), max_sequence_length))
     for i, message in enumerate(messages):
         words = message.lower().split()
         for j, word in enumerate(words):
             X[i, j] = word_to_index[word]
-
+    #---------------------------------------------
     # Convert labels to numerical values
     label_to_index = {'reminder': 0, 'other': 1}
     y = np.array([label_to_index[label] for label in labels])
@@ -377,7 +395,9 @@ async def add_reminder(username, reminder, channel_id, channel_name, reminder_ti
     
 #----------------------------------------------------------------------
 async def label_last_prompt(ctx,db_conn, label):
+    db_conn.row_factory = sqlite3.Row
     async with db_conn.cursor() as cursor:
+        
         await cursor.execute(f"""
         SELECT * FROM prompts 
         where channel_name = '{ctx.channel.name}' 
@@ -387,13 +407,14 @@ async def label_last_prompt(ctx,db_conn, label):
         last_row = await cursor.fetchone()
        # If last_row is not None, insert its data into 'labeled_prompts'
         if last_row is not None:
+            last_row = dict(last_row)
             insert_query = '''INSERT INTO labeled_prompts (id, username, prompt, model, response, channel_name, timestamp,label)
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
-            data_tuple = last_row + (label,)  # Add label to the tuple
             
-            await cursor.execute(insert_query, data_tuple)
+            await cursor.execute(insert_query,
+                                 tuple([last_row[key] for key in last_row.keys()] + [label]))
             await db_conn.commit()
-            
+            await ctx.send(f"Last promped labeled as: {label} - {last_row['prompt']}")
 # Ignore this chunk
 # async def store_prompt(db_conn, username, prompt, model, response, channel_name):
 #     async with db_conn.cursor() as cursor:
@@ -564,9 +585,9 @@ async def reminder(ctx, date: str, time: str, *, message: str):
 @bot.command()
 async def label_last(ctx,label):
     # Verify the label
-    print(label)
+    
     if label not in ['reminder', 'other']:
-        await ctx.send("Invalid label. Please use 'reminder' or 'other'.")
+        await ctx.send("Invalid label. Please use `!label_last reminder` or `!label_last other`.")
         return
     db_conn = await create_connection()
     channel_name = ctx.channel.name
@@ -574,8 +595,6 @@ async def label_last(ctx,label):
     # label_last_prompt
     await label_last_prompt(ctx,db_conn,label)
         
-
-    await ctx.send(f"Last promped labeled as: {label}")
 
 #-----------------------------------------------------------------------
 # The 'send_reminders' function is a looping task that runs every minute.
