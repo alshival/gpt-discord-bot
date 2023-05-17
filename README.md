@@ -54,7 +54,9 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
 </p>
 
-This will allow you to label your last prompt. `label_last` is user and channel specific.
+`label_last` is user and channel specific.
+
+Please let me know if you run into any bugs by submitting a [new issue](https://github.com/alshival/gpt-discord-bot/issues).
 
 For those of you who would like us to host your bot, or if you would like customized solutions, visit our little shop: [Alshival.com](https://Alshival.com).
 
