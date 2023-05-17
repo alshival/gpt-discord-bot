@@ -11,10 +11,10 @@ bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 
 # Define a command
 @bot.command()
-async def chatGPT(ctx, *, prompt):
+async def davinci3(ctx, *, prompt):
     # Generate a response using GPT
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="text-davinci-003",
         prompt=prompt,
         max_tokens=1024,
         n=1,
@@ -27,7 +27,7 @@ async def chatGPT(ctx, *, prompt):
 
 # Define a command
 @bot.command()
-async def chatGPTturbo(ctx, *, message):
+async def gpt3(ctx, *, message):
     # Generate a response using GPT
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",

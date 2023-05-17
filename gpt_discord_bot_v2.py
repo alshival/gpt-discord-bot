@@ -414,7 +414,7 @@ async def label_last_prompt(ctx,db_conn, label):
             await cursor.execute(insert_query,
                                  tuple([last_row[key] for key in last_row.keys()] + [label]))
             await db_conn.commit()
-            await ctx.send(f"Last promped labeled as: {label} - {last_row['prompt']}")
+            await ctx.send(f"Last prompt labeled as: {label} - {last_row['prompt']}")
 # Ignore this chunk
 # async def store_prompt(db_conn, username, prompt, model, response, channel_name):
 #     async with db_conn.cursor() as cursor:
