@@ -679,8 +679,11 @@ async def gpt3(ctx, *, message):
             )
 
             board = response['choices'][0]['message']['content']
-            board = eval(board)
-            return board
+            try:
+                board = eval(board)
+                return board
+            except Exception as e:
+                await ctx.send("I give up.")
 
         winner = None
         turns = range(0,9)
