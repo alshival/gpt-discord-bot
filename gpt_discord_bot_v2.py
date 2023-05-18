@@ -197,7 +197,7 @@ async def train_keras():
         'other','reminder','other','reminder','reminder','other','reminder',
         'other','reminder','other','reminder','other','reminder','other',
         'reminder','other','reminder','other','reminder','other','reminder',
-        'other','other','ttt','ttt','ttt','ttt','ttt','ttt'.]
+        'other','other','ttt','ttt','ttt','ttt','ttt','ttt']
     #---------------------------------------------
     # Check if `data.db` has labeled_prompts table
     conn = sqlite3.connect('data.db')
