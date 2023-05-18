@@ -799,7 +799,7 @@ async def retrain_keras(ctx):
     if ctx.message.author.guild_permissions.administrator:
         await ctx.send('Training. Standby...')
         await train_keras()
-        await ctx.send('Training complete')
+        await ctx.send('Training complete.')
     else:
         await ctx.send('Please contact a server admin to update the keras layer')
 #-----------------------------------------------------------------------
