@@ -51,6 +51,8 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 !label_last other
 ```
 
+[New 2023-05-18: Retrain the keras layer straight from discord: `!retrain_keras`]
+
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
 </p>
