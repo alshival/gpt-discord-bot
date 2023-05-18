@@ -173,7 +173,13 @@ async def train_keras():
         "What are the ingredients in a Caesar salad?",
         "Remind me to bring my umbrella if it's going to rain tomorrow.",
         "How do you make a margarita?",
-        "In a short answer, tell me how to write pi/2 as an infinite sum."
+        "In a short answer, tell me how to write pi/2 as an infinite sum.",
+        "Let's play tic tac toe",
+        "Start a game of ttt",
+        "Want to play tic tac toe?",
+        "Want to play ttt?",
+        "How about a game of tic tac toe?",
+        "How about a game of ttt?"
     ]
     labels = [
         'reminder','reminder','other','reminder','other',
@@ -191,7 +197,7 @@ async def train_keras():
         'other','reminder','other','reminder','reminder','other','reminder',
         'other','reminder','other','reminder','other','reminder','other',
         'reminder','other','reminder','other','reminder','other','reminder',
-        'other','other']
+        'other','other','ttt','ttt','ttt','ttt','ttt','ttt'.]
     #---------------------------------------------
     # Check if `data.db` has labeled_prompts table
     conn = sqlite3.connect('data.db')
