@@ -2,6 +2,12 @@
     * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
     * TO DO: Add ability to cancel reminders.
     * TO DO: Consider a Federated Learning Model for the keras layer.
+    * To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
+             To this, I have some ideas. We collect the data for the games. Store each state of the board
+             in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
+             and those which resulted in a draw or a loss.
+             That is then fed into the training for the GPT model.
+             We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
     
 # GPT-Discord-Bot Starter Code
 
