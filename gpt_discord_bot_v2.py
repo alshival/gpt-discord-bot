@@ -620,7 +620,7 @@ async def gpt3(ctx, *, message):
         await ctx.send(players[0]['mention'] + " goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
         await ctx.send(print_board(board))
         async def bot_move(players,board):
-            bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == 'chatGPT']
+            bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == '@chatGPT']
 
             game_train = [
                 {
