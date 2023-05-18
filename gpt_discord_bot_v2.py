@@ -700,7 +700,8 @@ async def gpt3(ctx, *, message):
                     else:
                         await ctx.send("Invalid move! You lose your turn.")
                 except Exception as e:
-                    await ctx.send("Invalid input! Please send your move in format 'row col' with starting index 0. For example, '2 1' for the middle square on the last row. You lose your turn.")
+                    await ctx.send("Invalid input! Game over.")
+                    return
                 turn += 1
             winner = check_win(board)
             if winner:
@@ -813,7 +814,7 @@ async def send_reminders():
     for reminder in reminders:
         username, reminder_text, channel_id, channel_name, reminder_time = reminder
         # Convert the string reminder_time to a datetime object
-        reminder_time = datetime.strptime(reminder_time, "%Y-%m-%d %H:%M:00")
+        reminder_time = datetime.strptime(reminder_time, "%Y-%m-%d %H:%M:%S")
 
         # Check if the current time is past the reminder time
         if datetime.now() >= reminder_time:
