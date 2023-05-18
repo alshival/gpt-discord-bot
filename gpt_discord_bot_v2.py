@@ -79,6 +79,10 @@ async def train_keras():
 
     # Dummy training data generated using GPT4
     messages = [
+        """
+        Introducing your new digital bestie, our latest and greatest Discord bot! Not only can it masterfully converse with the proficiency of OpenAI's GPT models, but it's also got a knack for organizing your life. Tell it in your own words to remind you of anything - from picking up groceries to calling your mom - and it will remember, no fancy commands needed! But that's not all - ever feel like a quick game of tic-tac-toe? Challenge our bot and enjoy a fun, engaging game right in your chat. 
+        Whether you're up for a chat, need a little help staying on top of things, or just want to have some fun, this bot has got you covered!
+        """,
         "Remind me to pick up the kids in 45 minutes",
         "Remind me to turn in my homework at midnight",
         "What's your favorite color?",
@@ -183,7 +187,7 @@ async def train_keras():
         "How about a game of ttt?"
     ]
     labels = [
-        'reminder','reminder','other','reminder','other',
+        'other','reminder','reminder','other','reminder','other',
         'other','reminder','reminder','reminder','reminder',
         'other','reminder','other','other','reminder','other',
         'reminder','other','reminder','other','reminder','other',
