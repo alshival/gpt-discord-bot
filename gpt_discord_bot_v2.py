@@ -20,6 +20,32 @@ import sqlite3
 import aiosqlite
 import asyncio
 import json
+import random
+
+# Set up the OpenAI API. The key is stored as an environment variable for security reasons. 
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+
+# Set up the bot with '!' as the command prefix. 
+# It is set to listen and respond to all types of intents in the server. 
+# You can change the command prefix by replacing '!' with your preferred symbol.
+bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
+
+
+########################################################################
+# Keras Task Assigner
+########################################################################
+# This code demonstrates a simple task assigner using Keras, which classifies
+# messages as either 'reminder' or 'other'. It is used before GPT in order
+# to classify which type of task will be run.
+import discord
+from discord.ext import commands,tasks
+import openai
+import os
+from datetime import datetime, timedelta
+import sqlite3
+import aiosqlite
+import asyncio
+import json
 
 # Set up the OpenAI API. The key is stored as an environment variable for security reasons. 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
@@ -43,10 +69,12 @@ from tensorflow.keras.layers import Dense
 max_sequence_length = None
 word_to_index = None
 model = None
+label_to_index = None 
 
 async def train_keras():
     global max_sequence_length
     global word_to_index
+    global label_to_index
     global model
 
     # Dummy training data generated using GPT4
@@ -196,18 +224,18 @@ async def train_keras():
         words = message.lower().split()
         for j, word in enumerate(words):
             X[i, j] = word_to_index[word]
-    #---------------------------------------------
+      #---------------------------------------------
     # Convert labels to numerical values
-    label_to_index = {'reminder': 0, 'other': 1}
+    label_to_index = {'reminder': 0, 'other': 1, 'ttt': 2}
     y = np.array([label_to_index[label] for label in labels])
 
     # Define the model
     model = Sequential()
     model.add(Dense(64, activation='relu', input_shape=(max_sequence_length,)))
-    model.add(Dense(1, activation='sigmoid'))
+    model.add(Dense(3, activation='softmax')) # change from 1 to 3
 
     # Compile the model
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy']) # change loss function
 
     # Train the model
     model.fit(X, y, epochs=epochs, batch_size=1, verbose=1)
@@ -230,10 +258,11 @@ async def classify_prompt(input_string):
 
     # Make prediction
     prediction = model.predict(new_sequence)
-    predicted_label = 'reminder' if prediction < 0.5 else 'other'
+    predicted_index = np.argmax(prediction)  # Change here, get the index of max value
+    index_to_label = {v: k for k, v in label_to_index.items()}
+    predicted_label = index_to_label[predicted_index]
 
     return predicted_label
-
 ########################################################################
 # Boot Sequence for the Bot
 ########################################################################
@@ -526,6 +555,134 @@ async def gpt3(ctx, *, message):
         
         await ctx.send(f"Reminder set for {reminder_time}.")
         
+    ### Play tic tac toe against GPT.
+    elif message_category == 'ttt':
+        # Initial empty board
+        board = [
+            [None, None, None],
+            [None, None, None],
+            [None, None, None]
+        ]
+        def check_win(board):
+            win_conditions = [
+                [board[0][0], board[0][1], board[0][2]],
+                [board[1][0], board[1][1], board[1][2]],
+                [board[2][0], board[2][1], board[2][2]],
+                [board[0][0], board[1][0], board[2][0]],
+                [board[0][1], board[1][1], board[2][1]],
+                [board[0][2], board[1][2], board[2][2]],
+                [board[0][0], board[1][1], board[2][2]],
+                [board[0][2], board[1][1], board[2][0]]
+            ]
+
+            if ['O', 'O', 'O'] in win_conditions:
+                return 'O'
+            elif ['X', 'X', 'X'] in win_conditions:
+                return 'X'
+            return None
+
+        def print_board(board):
+            emojis = {None: ":white_large_square:", 'X': ":regional_indicator_x:", 'O': ":o2:"}
+            return "\n".join(["".join(emojis[i] for i in row) for row in board])
+
+        players = [{'member':ctx.author.name,'mention':ctx.author.mention},{'member':'chatGPT','mention':'chatGPT'}]
+        random.shuffle(players)
+        emoji_to_players = dict(zip(['O','X'],players))
+        players = {0: {'member': emoji_to_players['O']['member'], 'emoji': 'O', 'mention': emoji_to_players['O']['mention']}, 
+                    1: {'member': emoji_to_players['X']['member'], 'emoji': 'X', 'mention': emoji_to_players['X']['mention']}}
+
+        async def bot_move(players,board):
+            bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == 'chatGPT']
+
+            game_train = [
+                {
+                'role':'user',
+                'content': """ 
+                    You are X. Make a move.
+                    [['X', 'O', 'O'],['X', None, 'X'],[None, 'X', 'O']]
+                    """
+                },{
+                'role':'assistant',
+                'content': "[['X', 'O', 'O'],['X', None, 'X'],['X', 'X', 'O']]"
+                },
+                {
+                'role':'user',
+                'content': """ 
+                    You are O. Make a move. [[None, 'O', 'X'], ['O', None, 'X'], ['X', 'O', None]]
+                    """
+                },{
+                'role':'assistant',
+                'content': "[[None, 'O', 'X'], ['O', None, 'X'], ['X', 'O', 'O']]"
+                },
+                {
+                'role':'user',
+                'content': """ 
+                    You are X. Make a move. [['X', 'X', 'O'], ['O', None, None], ['X', None, 'O']]
+                    """
+                },{
+                'role':'assistant',
+                'content': "[['X', 'X', 'O'], ['O', None, 'X'], ['X', None, 'O']]"
+                },
+                {
+                'role':'user',
+                'content': """You are O. Make a move. [[None, 'O', None], ['X', 'O', 'X'], ['O', None, 'X']]"""
+                },{
+                'role':'assistant',
+                'content': "[[None, 'O', None], ['X', 'O', 'X'], ['O', 'O', 'X']]"
+                },
+                {
+                'role':'user',
+                'content':f"""
+                    You are {bot_emoji}. Make a move. {board}
+                """
+                }
+            ]
+
+
+            response = openai.ChatCompletion.create(
+                model='gpt-3.5-turbo',
+                messages=game_train,
+                max_tokens=1024,
+                n=1,
+                temperature=0.5,
+                top_p=1,
+                frequency_penalty=0.0,
+                presence_penalty=0.6,
+            )
+
+            board = response['choices'][0]['message']['content']
+            board = eval(board)
+            return board
+
+        winner = None
+        turns = range(0,9)
+        for turn in turns:
+            current_player = players[turn % 2]
+            if current_player['mention'] == 'chatGPT':
+                board = await bot_move(players,board)
+                await ctx.send(print_board(board))            
+                turn += 1
+            else:
+                await ctx.send(f"{current_player['mention']}'s turn!")
+                msg = await bot.wait_for("message", check=lambda message: message.author.name == current_player['member'])
+                try:
+                    row, col = [int(pos) for pos in msg.content.split()]
+                    if board[row][col] is None:
+                        board[row][col] = current_player['emoji']
+                        await ctx.send(print_board(board))
+                    else:
+                        await ctx.send("Invalid move! You lose your turn.")
+                except Exception as e:
+                    await ctx.send("Invalid input! Please send your move in format 'row col'. For example, '2 1' for the middle square on the last row. You lose your turn.")
+                turn += 1
+            winner = check_win(board)
+            if winner:
+                await ctx.send(f"{current_player['mention']} wins!")
+                return
+            if not any(None in row for row in board):
+                await ctx.send("Game over! It's a draw.")
+                return
+
     elif message_category == 'other':
         past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
 
@@ -592,8 +749,8 @@ async def reminder(ctx, date: str, time: str, *, message: str):
 async def label_last(ctx,label):
     # Verify the label
     
-    if label not in ['reminder', 'other']:
-        await ctx.send("Invalid label. Please use `!label_last reminder` or `!label_last other`.")
+    if label not in ['reminder', 'other','ttt']:
+        await ctx.send("Invalid label. Please use `!label_last reminder` if you meant to set a reminder, '!label_last ttt' for tic tac toe, or `!label_last other`.")
         return
     db_conn = await create_connection()
     channel_name = ctx.channel.name
