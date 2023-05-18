@@ -793,9 +793,12 @@ async def label_last(ctx,label):
 # '!label_last' command to correctly label the last prompt.
 @bot.command()
 async def retrain_keras(ctx):
-    await ctx.send('Training. Standby...')
-    await train_keras()
-    await ctx.send('Training complete')
+    if ctx.message.author.guild_permissions.administrator:
+        await ctx.send('Training. Standby...')
+        await train_keras()
+        await ctx.send('Training complete')
+    else:
+        await ctx.send('Please contact a server admin to update the keras layer')
 #-----------------------------------------------------------------------
 # The 'send_reminders' function is a looping task that runs every minute.
 # It fetches all reminders from the 'reminders' table in the SQLite database.
