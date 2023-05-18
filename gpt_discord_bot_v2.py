@@ -665,8 +665,7 @@ async def gpt3(ctx, *, message):
         for turn in turns:
             current_player = players[turn % 2]
             if current_player['mention'] == 'chatGPT':
-                board = await bot_move(players,board)
-                await ctx.send(print_board(board))            
+                board = await bot_move(players,board)           
                 turn += 1
             else:
                 await ctx.send(f"{current_player['mention']}'s turn! Send your move in format 'row col'. For example, '2 1' for the middle square on the last row.")
