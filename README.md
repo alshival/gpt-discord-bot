@@ -42,10 +42,17 @@ To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 or use natural language with `gpt3`:
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="50%" height="50%">
 </p>
 
 Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is a benefit of using the SQLite3 database.
+
+You can also have the bot play tic tac toe with you. GPT makes the move.
+
+
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png" width="50%" height="50%">
+</p>
 
 If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles or gives you a generated answer, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
 
@@ -63,11 +70,11 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 Run `!retrain_keras` to retrain the model after adding a prompt.
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="50%" height="50%">
 </p>
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="50%" height="50%">
 </p>
 
 I meant parallel port... No more parallel ports...
