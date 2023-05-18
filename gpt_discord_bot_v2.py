@@ -251,6 +251,7 @@ async def train_keras():
 asyncio.get_event_loop().run_until_complete(train_keras())
 
 # Classify text.
+# Classify text.
 async def classify_prompt(input_string):
     global max_sequence_length
     global word_to_index
@@ -258,7 +259,7 @@ async def classify_prompt(input_string):
 
     # Preprocess the input string
     new_sequence = np.zeros((1, max_sequence_length))
-    words = input_string.lower().split()
+    words = input_string.lower().split()[:max_sequence_length]  # Truncate the message here
     for j, word in enumerate(words):
         if word in word_to_index:
             new_sequence[0, j] = word_to_index[word]
@@ -270,6 +271,7 @@ async def classify_prompt(input_string):
     predicted_label = index_to_label[predicted_index]
 
     return predicted_label
+
 ########################################################################
 # Boot Sequence for the Bot
 ########################################################################
@@ -680,7 +682,7 @@ async def gpt3(ctx, *, message):
                     else:
                         await ctx.send("Invalid move! You lose your turn.")
                 except Exception as e:
-                    await ctx.send("Invalid input! Please send your move in format 'row col'. For example, '2 1' for the middle square on the last row. You lose your turn.")
+                    await ctx.send("Invalid input! Please send your move in format 'row col' with starting index 0. For example, '2 1' for the middle square on the last row. You lose your turn.")
                 turn += 1
             winner = check_win(board)
             if winner:
