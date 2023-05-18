@@ -669,7 +669,7 @@ async def gpt3(ctx, *, message):
                 await ctx.send(print_board(board))            
                 turn += 1
             else:
-                await ctx.send(f"{current_player['mention']}'s turn!")
+                await ctx.send(f"{current_player['mention']}'s turn! Send your move in format 'row col'. For example, '2 1' for the middle square on the last row.")
                 msg = await bot.wait_for("message", check=lambda message: message.author.name == current_player['member'])
                 try:
                     row, col = [int(pos) for pos in msg.content.split()]
