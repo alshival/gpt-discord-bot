@@ -54,12 +54,17 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 !label_last other
 !label_last ttt
 ```
+
 * `reminder` - Used if you were asking it to schedule a reminder.
 * `other` - Used if you asked it a general question and want to access GPT directly.
 * `ttt` - Used if you wanted to play tic tac toe.
 
 #### Update 2023-05-18: Retrain the keras layer straight from discord
 Run `!retrain_keras` to retrain the model after adding a prompt.
+
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
+</p>
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
