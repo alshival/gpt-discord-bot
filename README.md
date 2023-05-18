@@ -6,6 +6,9 @@
 # GPT-Discord-Bot Starter Code
 
 Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+
+You can also ask it to play tic tac toe with you.
+
 Currently, we've implemented two models:
 
   * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
