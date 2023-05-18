@@ -5,7 +5,7 @@
     * To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
              To this, I have some ideas. We collect the data for the games. Store each state of the board
              in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
-             and those which resulted in a draw or a loss.
+             and those which resulted in a draw with 0, and those which resulted in a loss with -1.
              That is then fed into the training for the GPT model.
              We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
     
