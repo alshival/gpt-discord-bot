@@ -258,6 +258,16 @@ async def classify_prompt(input_string):
     global model
 
     # Preprocess the input string
+    # Note that if your input is longer than max_sequence_length,
+    # The rest of the sequence will be truncated.
+    # Therefore, you may not get the respose you are looking for.
+    # To fix this from discord, run the following commands:
+    #
+    # !last_prompt ttt
+    # !retrain_keras
+    #
+    # The keras layer is now updated to include your prompt with the appropriate label.
+    # See `last_prompt` and `retrain_keras` in the code below for ore information.
     new_sequence = np.zeros((1, max_sequence_length))
     words = input_string.lower().split()[:max_sequence_length]  # Truncate the message here
     for j, word in enumerate(words):
