@@ -590,13 +590,13 @@ async def gpt3(ctx, *, message):
         def print_board(board):
             emojis = {None: ":white_large_square:", 'X': ":regional_indicator_x:", 'O': ":o2:"}
             return "\n".join(["".join(emojis[i] for i in row) for row in board])
-
+        
         players = [{'member':ctx.author.name,'mention':ctx.author.mention},{'member':'chatGPT','mention':'chatGPT'}]
         random.shuffle(players)
         emoji_to_players = dict(zip(['O','X'],players))
         players = {0: {'member': emoji_to_players['O']['member'], 'emoji': 'O', 'mention': emoji_to_players['O']['mention']}, 
                     1: {'member': emoji_to_players['X']['member'], 'emoji': 'X', 'mention': emoji_to_players['X']['mention']}}
-
+        ctx.send(players[0]['mention'] + "goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
         async def bot_move(players,board):
             bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == 'chatGPT']
 
@@ -666,9 +666,9 @@ async def gpt3(ctx, *, message):
             current_player = players[turn % 2]
             if current_player['mention'] == 'chatGPT':
                 board = await bot_move(players,board)           
-                turn += 1
+                turn += 1 
             else:
-                await ctx.send(f"{current_player['mention']}'s turn! Send your move in format 'row col'. For example, '2 1' for the middle square on the last row.")
+                await ctx.send(f"{current_player['mention']}'s turn!")
                 msg = await bot.wait_for("message", check=lambda message: message.author.name == current_player['member'])
                 try:
                     row, col = [int(pos) for pos in msg.content.split()]
@@ -762,8 +762,14 @@ async def label_last(ctx,label):
     
     # label_last_prompt
     await label_last_prompt(ctx,db_conn,label)
-        
 
+#-----------------------------------------------------------------------
+# '!label_last' command to correctly label the last prompt.
+@bot.command()
+async def retrain_keras(ctx):
+    ctx.send('Training. Standby...')
+    await train_keras()
+    ctx.send('Training complete')
 #-----------------------------------------------------------------------
 # The 'send_reminders' function is a looping task that runs every minute.
 # It fetches all reminders from the 'reminders' table in the SQLite database.
