@@ -175,6 +175,7 @@ async def train_keras():
         "How do you make a margarita?",
         "In a short answer, tell me how to write pi/2 as an infinite sum.",
         "Let's play tic tac toe",
+        "Let's play tic tac toe.",
         "Start a game of ttt",
         "Want to play tic tac toe?",
         "Want to play ttt?",
@@ -197,7 +198,7 @@ async def train_keras():
         'other','reminder','other','reminder','reminder','other','reminder',
         'other','reminder','other','reminder','other','reminder','other',
         'reminder','other','reminder','other','reminder','other','reminder',
-        'other','other','ttt','ttt','ttt','ttt','ttt','ttt']
+        'other','other','ttt','ttt','ttt','ttt','ttt','ttt','ttt']
     #---------------------------------------------
     # Check if `data.db` has labeled_prompts table
     conn = sqlite3.connect('data.db')
@@ -676,7 +677,6 @@ async def gpt3(ctx, *, message):
                     row, col = [int(pos) for pos in msg.content.split()]
                     if board[row][col] is None:
                         board[row][col] = current_player['emoji']
-                        await ctx.send(print_board(board))
                     else:
                         await ctx.send("Invalid move! You lose your turn.")
                 except Exception as e:
