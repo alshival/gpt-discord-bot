@@ -6,6 +6,9 @@
 # GPT-Discord-Bot Starter Code
 
 Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+
+You can also ask it to play tic tac toe with you.
+
 Currently, we've implemented two models:
 
   * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
@@ -49,7 +52,19 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 ```
 !label_last reminder
 !label_last other
+!label_last ttt
 ```
+
+* `reminder` - Used if you were asking it to schedule a reminder.
+* `other` - Used if you asked it a general question and want to access GPT directly.
+* `ttt` - Used if you wanted to play tic tac toe.
+
+#### Update 2023-05-18: Retrain the keras layer straight from discord
+Run `!retrain_keras` to retrain the model after adding a prompt.
+
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
+</p>
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-17%206.16.47%20AM.png?raw=true" width="75%" height="75%">
