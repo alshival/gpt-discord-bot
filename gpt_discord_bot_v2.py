@@ -697,6 +697,7 @@ async def gpt3(ctx, *, message):
                     row, col = [int(pos) for pos in msg.content.split()]
                     if board[row][col] is None:
                         board[row][col] = current_player['emoji']
+                        await ctx.send(print_board(board))
                     else:
                         await ctx.send("Invalid move! You lose your turn.")
                 except Exception as e:
