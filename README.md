@@ -76,7 +76,7 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 Run `!retrain_keras` to retrain the model after adding a prompt.
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="50%" height="50%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
 </p>
 
 <p align="center">
