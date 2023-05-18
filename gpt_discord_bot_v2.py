@@ -612,12 +612,12 @@ async def gpt3(ctx, *, message):
             emojis = {None: ":white_large_square:", 'X': ":regional_indicator_x:", 'O': ":o2:"}
             return "\n".join(["".join(emojis[i] for i in row) for row in board])
         
-        players = [{'member':ctx.author.name,'mention':ctx.author.mention},{'member':'chatGPT','mention':'chatGPT'}]
+        players = [{'member':ctx.author.name,'mention':ctx.author.mention},{'member':'chatGPT','mention':'@chatGPT'}]
         random.shuffle(players)
         emoji_to_players = dict(zip(['O','X'],players))
         players = {0: {'member': emoji_to_players['O']['member'], 'emoji': 'O', 'mention': emoji_to_players['O']['mention']}, 
                     1: {'member': emoji_to_players['X']['member'], 'emoji': 'X', 'mention': emoji_to_players['X']['mention']}}
-        await ctx.send('@' +players[0]['mention'] + " goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
+        await ctx.send(+players[0]['mention'] + " goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
         await ctx.send(print_board(board))
         async def bot_move(players,board):
             bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == 'chatGPT']
@@ -686,7 +686,7 @@ async def gpt3(ctx, *, message):
         turns = range(0,9)
         for turn in turns:
             current_player = players[turn % 2]
-            if current_player['mention'] == 'chatGPT':
+            if current_player['mention'] == '@chatGPT':
                 board = await bot_move(players,board)           
                 await ctx.send(print_board(board))
                 turn += 1 
