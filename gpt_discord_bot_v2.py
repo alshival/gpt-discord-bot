@@ -596,7 +596,8 @@ async def gpt3(ctx, *, message):
         emoji_to_players = dict(zip(['O','X'],players))
         players = {0: {'member': emoji_to_players['O']['member'], 'emoji': 'O', 'mention': emoji_to_players['O']['mention']}, 
                     1: {'member': emoji_to_players['X']['member'], 'emoji': 'X', 'mention': emoji_to_players['X']['mention']}}
-        ctx.send(players[0]['mention'] + "goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
+        await ctx.send(players[0]['mention'] + "goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
+        await ctx.send(print_board(board))
         async def bot_move(players,board):
             bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == 'chatGPT']
 
@@ -666,6 +667,7 @@ async def gpt3(ctx, *, message):
             current_player = players[turn % 2]
             if current_player['mention'] == 'chatGPT':
                 board = await bot_move(players,board)           
+                await ctx.send(print_board(board))
                 turn += 1 
             else:
                 await ctx.send(f"{current_player['mention']}'s turn!")
