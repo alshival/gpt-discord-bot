@@ -706,9 +706,11 @@ async def gpt3(ctx, *, message):
             winner = check_win(board)
             if winner:
                 await ctx.send(f"{current_player['mention']} wins!")
+                await ctx.send(print_board(board))
                 return
             if not any(None in row for row in board):
                 await ctx.send("Game over! It's a draw.")
+                await ctx.send(print_board(board))
                 return
 
     elif message_category == 'other':
