@@ -251,25 +251,14 @@ async def train_keras():
 asyncio.get_event_loop().run_until_complete(train_keras())
 
 # Classify text.
-# Classify text.
 async def classify_prompt(input_string):
     global max_sequence_length
     global word_to_index
     global model
 
     # Preprocess the input string
-    # Note that if your input is longer than max_sequence_length,
-    # The rest of the sequence will be truncated.
-    # Therefore, you may not get the respose you are looking for.
-    # To fix this from discord, run the following commands:
-    #
-    # !last_prompt ttt
-    # !retrain_keras
-    #
-    # The keras layer is now updated to include your prompt with the appropriate label.
-    # See `last_prompt` and `retrain_keras` in the code below for ore information.
     new_sequence = np.zeros((1, max_sequence_length))
-    words = input_string.lower().split()[:max_sequence_length]  # Truncate the message here
+    words = input_string.lower().split()
     for j, word in enumerate(words):
         if word in word_to_index:
             new_sequence[0, j] = word_to_index[word]
@@ -281,6 +270,7 @@ async def classify_prompt(input_string):
     predicted_label = index_to_label[predicted_index]
 
     return predicted_label
+
 
 ########################################################################
 # Boot Sequence for the Bot
@@ -528,8 +518,22 @@ async def gpt3(ctx, *, message):
     username = ctx.author.name
     
     channel_name = ctx.channel.name
-    
-    message_category = await classify_prompt(message)
+    try:
+        message_category = await classify_prompt(message)
+        message_classified =True
+    except Exception as e:
+        # Capture the error message
+        error_message = str(e)
+        await ctx.send("""
+        I'll need a bit more training to answer your question.
+        Can you run `!label_last <label>` by replacing '<label>' with one of the following?
+            * `ttt` - for tic tac toe requests.
+            * `reminder` - for reminder requests.
+            * `other` - for everything else.
+        After that, run `!retrain_keras`, wait for me to think a bit, and then ask me again.
+        """)
+        await store_prompt(db_conn, ctx.author.name, message, model, e, channel_name)
+        return
     
     # await ctx.send(message_category)
     
@@ -571,8 +575,8 @@ async def gpt3(ctx, *, message):
         
         # Add the new reminder to the database
         await add_reminder(ctx.author.name, response_text['message'], ctx.channel.id, ctx.channel.name, reminder_time)
-        
         await ctx.send(f"Reminder set for {reminder_time}.")
+            
         
     ### Play tic tac toe against GPT.
     elif message_category == 'ttt':
@@ -781,9 +785,9 @@ async def label_last(ctx,label):
 # '!label_last' command to correctly label the last prompt.
 @bot.command()
 async def retrain_keras(ctx):
-    ctx.send('Training. Standby...')
+    await ctx.send('Training. Standby...')
     await train_keras()
-    ctx.send('Training complete')
+    await ctx.send('Training complete')
 #-----------------------------------------------------------------------
 # The 'send_reminders' function is a looping task that runs every minute.
 # It fetches all reminders from the 'reminders' table in the SQLite database.
