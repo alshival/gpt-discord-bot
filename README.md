@@ -43,7 +43,7 @@ To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 or use natural language with `gpt3`:
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="50%" height="50%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="100%" height="100%">
 </p>
 
 Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is a benefit of using the SQLite3 database.
@@ -52,7 +52,7 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png" width="50%" height="50%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png" width="100%" height="100%">
 </p>
 
 # Training the keras layer
@@ -73,7 +73,7 @@ Finally, run `!retrain_keras` to retrain the model after adding your prompt. `!r
 The keras layer is always retrained when the bot boots up.
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="100%" height="100%">
 </p>
 
 `label_last` is user and channel specific. Let us know if you run into any bugs by submitting a [new issue](https://github.com/alshival/gpt-discord-bot/issues).
@@ -100,7 +100,7 @@ The beauty of learning AI is that you can use AI itself to facilitate your learn
 In order for the bot to respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a Raspberry Pi tucked away in your bedroom (a hint for students on a tight budget).
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="50%" height="50%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="100%" height="100%">
 </p>
 
 ### Step 0
