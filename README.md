@@ -1,4 +1,4 @@
-    * TO DO: Start on v3, improving on v2.
+    * TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
     * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
     * TO DO: Add ability to cancel reminders.
     * TO DO: Consider a Federated Learning Model for the keras layer.
