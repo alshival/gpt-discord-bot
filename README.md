@@ -65,8 +65,7 @@ You will need to teach the keras layer for some time when you install the bot. I
 * `other` - Used if you asked it a general question and want to access GPT directly.
 * `ttt` - Used if you wanted to play tic tac toe.
 
-#### Update 2023-05-18: Retrain the keras layer straight from discord
-Run `!retrain_keras` to retrain the model after adding a prompt.
+Finally, run `!retrain_keras` to retrain the model after adding your prompt. `!retrain_keras` requires administative privileges. 
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
