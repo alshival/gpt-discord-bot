@@ -355,6 +355,7 @@ async def create_labeled_prompts_table():
                       prompt TEXT NOT NULL,
                       model TEXT,
                       response TEXT,
+                      channel_id TEXT,
                       channel_name TEXT,
                       timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                       label TEXT)''')
