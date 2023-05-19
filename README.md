@@ -1,5 +1,6 @@
 DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
-Please report any issues via github or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
+
+Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
 
 ```
 * TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
