@@ -630,6 +630,9 @@ async def gpt3(ctx, *, message):
         emoji_to_players = dict(zip(['O','X'],players))
         players = {0: {'member': emoji_to_players['O']['member'], 'emoji': 'O', 'mention': emoji_to_players['O']['mention']}, 
                     1: {'member': emoji_to_players['X']['member'], 'emoji': 'X', 'mention': emoji_to_players['X']['mention']}}
+        
+        await store_prompt(db_conn, ctx.author.name, message, model, f"ttt", channel_name)
+        
         await ctx.send(players[0]['mention'] + " goes first! Send your move in format 'row col', starting with 0 for the first row and column. For example,   2 1   would be the middle square on the last row.")
         await ctx.send(print_board(board))
         async def bot_move(players,board):
