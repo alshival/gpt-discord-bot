@@ -1,8 +1,9 @@
-DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
+Check a video of the bot in action here, and how to improve task classification by the keras layer from within Discord: [Youtube](https://youtu.be/RhjecZdwxZc).
 
 Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
 
 ```
+DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
 * TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
 * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
 * TO DO: Add ability to cancel reminders.
