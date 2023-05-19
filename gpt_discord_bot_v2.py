@@ -744,6 +744,8 @@ async def gpt3(ctx, *, message):
                          {'role': 'assistant', 'content': f'!reminder {(datetime.now() + timedelta(weeks=1)).strftime("%Y-%m-%d")} Turn in homework'}])
         messages.extend([{'role': 'user', 'content': "Remind me in three hours to pick up the kids."},
                          {'role': 'assistant', 'content': f'!reminder {(datetime.now() + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M")} Pick up the kids'}])
+        messages.extend([{'role':'user','content':"remind me to pick up groceries at some point tomorrow afternoon"},
+                         {'role':'user','content':f'!reminder {(datetime.now() + timedelta(days=1)).replace(hour=15,minute=0).strftime("%Y-%m-%d %H:%M")} Pick up the kids'}]
         for prompt, response in past_prompts:
             messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
         messages.append({'role': 'user', 'content': message})
