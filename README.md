@@ -53,7 +53,7 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png" width="50%" height="50%">
 </p>
 
-You will need to teach the keras layer at first. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles or gives you a generated answer, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
+You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
 
 ```
 !label_last reminder
