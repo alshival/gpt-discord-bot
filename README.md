@@ -57,6 +57,12 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 
 # Training the keras layer
 
+<p align="center">
+
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="100%" height="100%">
+
+</p>
+
 You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include the last prompt in the training data using `label_last` along with the appropriate label (end a tic tac toe game first by entering random string):
 
 ```
@@ -99,9 +105,7 @@ The beauty of learning AI is that you can use AI itself to facilitate your learn
 
 In order for the bot to respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a Raspberry Pi tucked away in your bedroom (a hint for students on a tight budget).
 
-<p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="100%" height="100%">
-</p>
+
 
 ### Step 0
 You'll need a Python installation (students, we suggest getting JupyterLab as well) and an [OpenAI API key](https://platform.openai.com/account/api-keys).
