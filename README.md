@@ -15,6 +15,8 @@ Currently, we've implemented two models:
 
 We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
 
+Note that training the keras layer is required, but we've streamlined the process so that you can do it right from Discord.
+
 # Usage
 
 
