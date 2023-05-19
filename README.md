@@ -27,7 +27,7 @@ To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
 
 ```
-!gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more serial port...)
+!gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more parallel ports...)
 ```
 
 In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, their models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
