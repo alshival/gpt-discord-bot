@@ -1,5 +1,5 @@
 ```
-DONE: Rebuilt locally from scratch. Bot is starting up smoothly now.
+DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. Please report any issues via github or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
 * TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
 * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
 * TO DO: Add ability to cancel reminders.
