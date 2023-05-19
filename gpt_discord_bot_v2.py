@@ -280,6 +280,17 @@ async def classify_prompt(input_string):
 # Boot Sequence for the Bot
 ########################################################################
 #-----------------------------------------------------------------------
+# This function is used to retrieve a list of channels. 
+# Originally created to aid in the removal of reminders from channels
+# that no longer exist in the `reminders` table within `data.db`.
+async def list_channels(bot):
+    channel_names = []
+    for guild in bot.guilds:
+        for channel in guild.channels:
+            if isinstance(channel, discord.TextChannel): # If you want text channels only
+                channel_names.append(channel.name)
+    return channel_names
+#-----------------------------------------------------------------------
 # This function creates a table named 'prompts' in the SQLite database 'data.db' upon bot startup.
 # The table is used to store the bot's conversation history.
 # The table has fields for id, username, prompt, model, response, channel_name, and timestamp.
@@ -295,6 +306,7 @@ async def create_table():
                   prompt TEXT NOT NULL,
                   model TEXT,
                   response TEXT,
+                  channel_id TEXT,
                   channel_name TEXT,
                   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
@@ -456,8 +468,8 @@ async def label_last_prompt(ctx,db_conn, label):
        # If last_row is not None, insert its data into 'labeled_prompts'
         if last_row is not None:
             last_row = dict(last_row)
-            insert_query = '''INSERT INTO labeled_prompts (id, username, prompt, model, response, channel_name, timestamp,label)
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)'''
+            insert_query = '''INSERT INTO labeled_prompts (id, username, prompt, model, response, channel_id, channel_name, timestamp,label)
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'''
             
             await cursor.execute(insert_query,
                                  tuple([last_row[key] for key in last_row.keys()] + [label]))
@@ -617,7 +629,7 @@ async def gpt3(ctx, *, message):
         emoji_to_players = dict(zip(['O','X'],players))
         players = {0: {'member': emoji_to_players['O']['member'], 'emoji': 'O', 'mention': emoji_to_players['O']['mention']}, 
                     1: {'member': emoji_to_players['X']['member'], 'emoji': 'X', 'mention': emoji_to_players['X']['mention']}}
-        await ctx.send(players[0]['mention'] + " goes first! Send your move in format 'row col'. For example,   2 1   for the middle square on the last row.")
+        await ctx.send(players[0]['mention'] + " goes first! Send your move in format 'row col', starting with 0 for the first row and column. For example,   2 1   would be the middle square on the last row.")
         await ctx.send(print_board(board))
         async def bot_move(players,board):
             bot_emoji = [p['emoji'] for p in players.values() if p['mention'] == '@chatGPT']
@@ -811,12 +823,37 @@ async def retrain_keras(ctx):
 # This function ensures that all reminders are sent at the correct times.
 
 @tasks.loop(minutes=1)
-async def send_reminders():
+async def send_reminders(bot):
     # Connect to the SQLite3 database named 'data.db'
     conn = await aiosqlite.connect('data.db')
     cursor = await conn.cursor()
+    
+    #### Clear out rows with null reminder_time
+    await cursor.execute("DELETE FROM reminders WHERE reminder_time IS NULL")
+    
+    #### Clear out reminders from deleted channels.
+    # Retrieve the list of channels from the table
+    await cursor.execute("SELECT distinct channel_name FROM reminders")
+    rows = await cursor.fetchall()
+    channels_in_table = [row[0] for row in rows]
+    
+    # Get the list of current channels
+    
+    guilds = bot.guilds # returns a list of guilds.
+    
+    ### This code should be replaced with something that can handle multiple guilds,
+    ### but for now, we will just use one guild.
+    current_channels = await list_channels(bot)
 
-    # Select all reminders from the 'reminders' table
+    #### Find the channels that exist in the table but are not present in the current channels
+    channels_to_delete = set(channels_in_table) - set(current_channels)
+
+    #### Delete the channels from the SQLite table
+    for channel in channels_to_delete:
+        cursor.execute("DELETE FROM your_table WHERE channel_name = ?", (channel,))
+
+    ### Send out the reminders
+    #### Select all reminders from the 'reminders' table
     await cursor.execute('SELECT username, reminder, channel_id, channel_name, reminder_time FROM reminders WHERE reminder_time is not null')
     reminders = await cursor.fetchall()
 
@@ -834,8 +871,7 @@ async def send_reminders():
             # Then delete the reminder from the database
             await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?', (username, reminder_time))
             await conn.commit()
-    # Clear out rows with null reminder_time
-    await cursor.execute("DELETE FROM reminders WHERE reminder_time IS NULL")
+
     # Close the connection
     await conn.commit()
     await conn.close()
@@ -846,7 +882,7 @@ async def send_reminders():
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
-    send_reminders.start()
+    bot.loop.create_task(send_reminders(bot))
 
 ########################################################################
 # Bot Startup Sequence
