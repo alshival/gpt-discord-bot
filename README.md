@@ -1,3 +1,5 @@
+# GPT Discord Bot: Transforming Discord into a Virtual Study Room and Workspace
+
 Check a video of the bot in action here, and how to improve task classification by the keras layer from within Discord: [Youtube](https://youtu.be/RhjecZdwxZc).
 
 Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
