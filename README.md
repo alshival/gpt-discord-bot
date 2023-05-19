@@ -1,14 +1,17 @@
-    * TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
-    * TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
-    * TO DO: Add ability to cancel reminders.
-    * TO DO: Consider a Federated Learning Model for the keras layer.
-    * To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
-             To this, I have some ideas. We collect the data for the games. Store each state of the board
-             in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
-             and those which resulted in a draw with 0, and those which resulted in a loss with -1.
-             That is then included int the training data for the GPT model.
-             We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
-    
+```
+DONE: Rebuilt locally from scratch. Bot is starting up smoothly now.
+* TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
+* TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
+* TO DO: Add ability to cancel reminders.
+* TO DO: Consider a Federated Learning Model for the keras layer.
+* To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
+       To this, I have some ideas. We collect the data for the games. Store each state of the board
+       in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
+       and those which resulted in a draw with 0, and those which resulted in a loss with -1.
+       That is then included int the training data for the GPT model.
+       We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
+```
+
 # GPT-Discord-Bot Starter Code
 
 Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
