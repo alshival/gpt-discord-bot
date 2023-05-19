@@ -1,28 +1,12 @@
 # GPT Discord Bot: Transforming Discord into a Virtual Study Room and Workspace
 
+Welcome to the Discord Bot brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+
+You can also ask it to play tic tac toe with you.
+
 Check a video of the bot in action here, and how to improve task classification by the keras layer from within Discord: [Youtube](https://youtu.be/RhjecZdwxZc).
 
 Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
-
-```
-DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
-* TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
-* TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
-* TO DO: Add ability to cancel reminders.
-* TO DO: Consider a Federated Learning Model for the keras layer.
-* To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
-       To this, I have some ideas. We collect the data for the games. Store each state of the board
-       in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
-       and those which resulted in a draw with 0, and those which resulted in a loss with -1.
-       That is then included int the training data for the GPT model.
-       We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
-```
-
-# GPT-Discord-Bot Starter Code
-
-Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
-
-You can also ask it to play tic tac toe with you.
 
 Currently, we've implemented two models:
 
@@ -177,3 +161,17 @@ Congratulations! Your bot should now be up and running! You can invite it to you
 With this simple installation process, you are all set to explore the world of AI-driven chatbots. Happy coding!
 
 Remember, this is just a starting point. As you grow more comfortable with the bot and its capabilities, feel free to make modifications and enhancements to better meet the needs of your community. Happy coding!
+
+```
+DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
+* TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
+* TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
+* TO DO: Add ability to cancel reminders.
+* TO DO: Consider a Federated Learning Model for the keras layer.
+* To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
+       To this, I have some ideas. We collect the data for the games. Store each state of the board
+       in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
+       and those which resulted in a draw with 0, and those which resulted in a loss with -1.
+       That is then included int the training data for the GPT model.
+       We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
+```
