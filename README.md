@@ -15,7 +15,7 @@ Currently, we've implemented two models:
 
 We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
 
-Note that training the keras layer is required, but we've streamlined the process so that you can do it right from Discord.
+Note that training the keras layer is required, but we've streamlined the process so that you can do it right from Discord. 
 
 # Usage
 
@@ -31,6 +31,10 @@ For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
 ```
 !gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more parallel ports...)
 ```
+
+If the bot does not respond, the model might be overloaded with requests.
+
+
 
 In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, their models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
 
