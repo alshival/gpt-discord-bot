@@ -1,6 +1,6 @@
 # openAi Discord Bot: Transforming Discord into a Virtual Study Room and Workspace
 
-Welcome to the openAi Discord Bot brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+Welcome to the [OpenAI](https://openai.com/) Discord Bot brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes a keras layer and openAi's models to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
 
 You can also ask it to play tic tac toe with you.
 
@@ -39,7 +39,7 @@ If the bot does not respond, the model might be overloaded with requests.
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-19%207.12.40%20PM.png?raw=true" width="100%" height="100%">
 </p>
 
-In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, their models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
+In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, openAi's models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
 
 To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 
@@ -70,7 +70,7 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 
 </p>
 
-You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include the last prompt in the training data using `label_last` along with the appropriate label (end a tic tac toe game first by entering a random sequence of strings):
+You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include your last prompt in the training data using `label_last` along with the appropriate label (end a tic tac toe game first by entering a random sequence of strings):
 
 ```
 !label_last reminder
