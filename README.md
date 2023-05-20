@@ -1,6 +1,6 @@
 # openAi Discord Bot: Transforming Discord into a Virtual Study Room and Workspace
 
-Welcome to the openAi Discord Bot brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+Welcome to the [OpenAI](https://openai.com/) Discord Bot brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes a keras layer and openAi's models to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
 
 You can also ask it to play tic tac toe with you.
 
