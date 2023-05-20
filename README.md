@@ -1,25 +1,12 @@
-DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
+# openAi Discord Bot: Transforming Discord into a Virtual Study Room and Workspace
 
-Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
-
-```
-* TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
-* TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
-* TO DO: Add ability to cancel reminders.
-* TO DO: Consider a Federated Learning Model for the keras layer.
-* To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
-       To this, I have some ideas. We collect the data for the games. Store each state of the board
-       in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
-       and those which resulted in a draw with 0, and those which resulted in a loss with -1.
-       That is then included int the training data for the GPT model.
-       We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
-```
-
-# GPT-Discord-Bot Starter Code
-
-Welcome to the Discord Bot Starter Code brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
+Welcome to the openAi Discord Bot brought to you by [Alshival's Data Service](https://Alshival.com). This code utilizes [OpenAI](https://openai.com/) and Tensorflow to provide a simple, yet expandable bot framework, allowing you to get started swiftly. It allows you to use openAi's models from within discord and set reminders using natural language.
 
 You can also ask it to play tic tac toe with you.
+
+Check a video of the bot in action here, and how to improve task classification by the keras layer from within Discord: [Youtube](https://youtu.be/RhjecZdwxZc).
+
+Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
 
 Currently, we've implemented two models:
 
@@ -27,6 +14,8 @@ Currently, we've implemented two models:
   * `gpt-3.5-turbo`: A more powerful option, ideally suited for $\huge\textcolor{red}{\textbf{\textsf{tutoring study groups}}}$ or $\huge\textcolor{green}{\textbf{\textsf{brainstorming with small teams}}}$.
 
 We'll incorporate a `!GPT4` command once GPT-4 scales up. The bot's code is designed to let you switch models effortlessly, even to fine-tuned models. To explore all available options, visit the [OpenAI's models](https://platform.openai.com/docs/models) page. You can have this bot up and running in $\huge\textcolor{VioletRed}{\textsf{just 7 steps}}$.
+
+Note that [training the keras layer](https://github.com/alshival/gpt-discord-bot/blob/main/README.md#training-the-keras-layer) is required, but we've streamlined the process so that you can do it right from Discord. 
 
 # Usage
 
@@ -40,8 +29,15 @@ To use `text-davinci-003` in Discord, prefix your request with `!davinci3`.
 For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
 
 ```
-!gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more serial port...)
+!gpt3 Write python code to move the axis of a CNC machine using a USB port. (please... no more parallel ports...)
 ```
+
+If the bot does not respond, the model might be overloaded with requests.
+
+
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-19%207.12.40%20PM.png?raw=true" width="100%" height="100%">
+</p>
 
 In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, their models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
 
@@ -54,7 +50,7 @@ To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 or use natural language with `gpt3`:
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="50%" height="50%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="100%" height="100%">
 </p>
 
 Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is a benefit of using the SQLite3 database.
@@ -63,10 +59,18 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png" width="50%" height="50%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png?raw=true" width="100%" height="100%">
 </p>
 
-If you ask it to do a task and the bot misbehaves, the keras layer may require some training. If you meant to schedule a reminder and it struggles or gives you a generated answer, include the last prompt in the training data next time the bot boots up using `label_last` along with the appropriate label:
+# Training the keras layer
+
+<p align="center">
+
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="100%" height="100%">
+
+</p>
+
+You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include the last prompt in the training data using `label_last` along with the appropriate label (end a tic tac toe game first by entering a random sequence of strings):
 
 ```
 !label_last reminder
@@ -78,11 +82,11 @@ If you ask it to do a task and the bot misbehaves, the keras layer may require s
 * `other` - Used if you asked it a general question and want to access GPT directly.
 * `ttt` - Used if you wanted to play tic tac toe.
 
-#### Update 2023-05-18: Retrain the keras layer straight from discord
-Run `!retrain_keras` to retrain the model after adding a prompt.
+Finally, run `!retrain_keras` to retrain the model after adding your prompt. `!retrain_keras` requires administative privileges. 
+The keras layer is always retrained when the bot boots up.
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="75%" height="75%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.14.19%20AM.png?raw=true" width="100%" height="100%">
 </p>
 
 `label_last` is user and channel specific. Let us know if you run into any bugs by submitting a [new issue](https://github.com/alshival/gpt-discord-bot/issues).
@@ -108,9 +112,7 @@ The beauty of learning AI is that you can use AI itself to facilitate your learn
 
 In order for the bot to respond, it must be running on a machine such as a cloud server, a PC or laptop, or even a Raspberry Pi tucked away in your bedroom (a hint for students on a tight budget).
 
-<p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/20230516_183603.gif?raw=true" width="50%" height="50%">
-</p>
+
 
 ### Step 0
 You'll need a Python installation (students, we suggest getting JupyterLab as well) and an [OpenAI API key](https://platform.openai.com/account/api-keys).
@@ -174,3 +176,17 @@ Congratulations! Your bot should now be up and running! You can invite it to you
 With this simple installation process, you are all set to explore the world of AI-driven chatbots. Happy coding!
 
 Remember, this is just a starting point. As you grow more comfortable with the bot and its capabilities, feel free to make modifications and enhancements to better meet the needs of your community. Happy coding!
+
+```
+DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
+* TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
+* TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
+* TO DO: Add ability to cancel reminders.
+* TO DO: Consider a Federated Learning Model for the keras layer.
+* To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
+       To this, I have some ideas. We collect the data for the games. Store each state of the board
+       in the SQLite database. After a match is complete, we label matches openAi wins with 1, 
+       and those which resulted in a draw with 0, and those which resulted in a loss with -1.
+       That is then included int the training data for the GPT model.
+       We could also try training another layer in-house to do that part, but I really want to see how far I can push openAi.
+```
