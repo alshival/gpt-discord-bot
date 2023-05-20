@@ -578,10 +578,12 @@ async def gpt3(ctx, *, message):
 
         # Extract the response text and send it back to the user
         response_text = response['choices'][0]['message']['content']
-        
-        response_text = eval(response_text)
-        
-        reminder_time = eval(response_text['reminder_time'])
+        try:
+            response_text = eval(response_text)
+
+            reminder_time = eval(response_text['reminder_time'])
+        except Exception as e:
+            await ctx.send(response_text)
         
         dictionary = {
             'message': response_text['message'],
@@ -681,8 +683,7 @@ async def gpt3(ctx, *, message):
                 """
                 }
             ]
-
-
+            
             response = openai.ChatCompletion.create(
                 model='gpt-3.5-turbo',
                 messages=game_train,
