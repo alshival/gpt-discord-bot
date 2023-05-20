@@ -832,58 +832,47 @@ async def retrain_keras(ctx):
 @tasks.loop(minutes=1)
 async def send_reminders(bot):
     try:
-        # Connect to the SQLite3 database named 'data.db'
-        conn = await aiosqlite.connect('data.db')
-        cursor = await conn.cursor()
-
-        # Clear out rows with null reminder_time
-        await cursor.execute("DELETE FROM reminders WHERE reminder_time IS NULL")
-
-        # Clear out reminders from deleted channels.
-        # Retrieve the list of channels from the table
-        await cursor.execute("SELECT distinct channel_name FROM reminders")
-        rows = await cursor.fetchall()
-        channels_in_table = [row[0] for row in rows]
-
-        # Get the list of current channels
-        guilds = bot.guilds  # returns a list of guilds.
-
         # This code should be replaced with something that can handle multiple guilds,
         # but for now, we will just use one guild.
         current_channels = await list_channels(bot)
+        
+        async with aiosqlite.connect('data.db') as conn:
+            cursor = await conn.cursor()
 
-        # Find the channels that exist in the table but are not present in the current channels
-        channels_to_delete = set(channels_in_table) - set(current_channels)
+            # Clear out rows with null reminder_time
+            await cursor.execute("DELETE FROM reminders WHERE reminder_time IS NULL")
 
-        # Delete the channels from the SQLite table
-        for channel in channels_to_delete:
-            await cursor.execute("DELETE FROM your_table WHERE channel_name = ?", (channel,))
+            # Clear out reminders from deleted channels.
+            await cursor.execute("SELECT distinct channel_name FROM reminders")
+            channels_in_table = [row[0] for row in await cursor.fetchall()]
 
-        # Send out the reminders
-        # Select all reminders from the 'reminders' table
-        await cursor.execute(
-            'SELECT username, reminder, channel_id, channel_name, reminder_time FROM reminders WHERE reminder_time is not null')
-        reminders = await cursor.fetchall()
+            # Find the channels that exist in the table but are not present in the current channels
+            channels_to_delete = set(channels_in_table) - set(current_channels)
 
-        for reminder in reminders:
-            username, reminder_text, channel_id, channel_name, reminder_time = reminder
-            # Convert the string reminder_time to a datetime object
-            reminder_time = datetime.strptime(reminder_time, "%Y-%m-%d %H:%M:%S")
+            # Delete the channels from the SQLite table
+            for channel in channels_to_delete:
+                await cursor.execute("DELETE FROM reminders WHERE channel_name = ?", (channel,))
 
-            # Check if the current time is past the reminder time
-            if datetime.now() >= reminder_time:
-                # If it is, get the user and channel and send the reminder
-                channel = bot.get_channel(int(channel_id))
-                await channel.send(f"@{username}, you set a reminder: {reminder_text}")
+            # Send out the reminders
+            await cursor.execute('SELECT username, reminder, channel_id, channel_name, reminder_time FROM reminders WHERE reminder_time is not null')
+            reminders = await cursor.fetchall()
 
-                # Then delete the reminder from the database
-                await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?',
-                                     (username, reminder_time))
-                await conn.commit()
+            for reminder in reminders:
+                username, reminder_text, channel_id, channel_name, reminder_time = reminder
+                reminder_time = datetime.strptime(reminder_time, "%Y-%m-%d %H:%M:%S")
 
-        # Close the connection
-        await conn.commit()
-        await conn.close()
+                if datetime.now() >= reminder_time:
+                    channel = bot.get_channel(int(channel_id))
+                    if channel is not None:
+                        await channel.send(f"@{username}, you set a reminder: {reminder_text}")
+                    else:
+                        print(f"Channel with ID {channel_id} not found.")
+
+                    await cursor.execute('DELETE FROM reminders WHERE username = ? AND reminder_time = ?',
+                                         (username, reminder_time.strftime("%Y-%m-%d %H:%M:%S"),))
+
+            # Commit the changes here
+            await conn.commit()
 
     except Exception as e:
         print(f"Error in send_reminders: {e}")
