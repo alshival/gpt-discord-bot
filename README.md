@@ -70,7 +70,7 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 
 </p>
 
-You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include the last prompt in the training data using `label_last` along with the appropriate label (end a tic tac toe game first by entering random string):
+You will need to teach the keras layer for some time when you install the bot. I provided a very small amount of training data. If you ask it to do a task and the bot misbehaves, such as when you meant to schedule a reminder and it starts tic tac toe or gives you a generated answer, include the last prompt in the training data using `label_last` along with the appropriate label (end a tic tac toe game first by entering a random sequence of strings):
 
 ```
 !label_last reminder
