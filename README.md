@@ -35,6 +35,9 @@ For `gpt-3.5-turbo` usage in Discord, prefix your request with `!gpt3`.
 If the bot does not respond, the model might be overloaded with requests.
 
 
+<p align="center">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-19%207.12.40%20PM.png?raw=true" width="100%" height="100%">
+</p>
 
 In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, their models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
 
@@ -56,7 +59,7 @@ You can also have the bot play tic tac toe with you. GPT makes the move.
 
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png" width="100%" height="100%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png?raw=true" width="100%" height="100%">
 </p>
 
 # Training the keras layer
