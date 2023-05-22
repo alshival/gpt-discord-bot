@@ -243,18 +243,17 @@ async def train_keras():
     label_to_index = {'reminder': 0, 'other': 1, 'ttt': 2}
     y = np.array([label_to_index[label] for label in labels])
 
-    # Define the model
     model = Sequential()
-    model.add(Embedding(input_dim=vocab_size, output_dim=50, input_length=max_sequence_length))
-    model.add(Conv1D(64, 5, activation='relu'))
-    model.add(MaxPooling1D(pool_size=4))
+    model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sequence_length))
+    model.add(LSTM(128, return_sequences=True))
+    model.add(Dropout(0.2))
     model.add(LSTM(64))
-    model.add(Dropout(0.5))
-    model.add(Dense(3, activation='softmax'))
-
+    model.add(Dropout(0.2))
+    model.add(Dense(3, activation='softmax'))  # assuming you have 3 classes
 
     # Compile the model
-    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy']) # change loss function
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy']) 
+
 
     # Train the model
     model.fit(X, y, epochs=epochs, batch_size=1, verbose=1)
