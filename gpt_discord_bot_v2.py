@@ -22,6 +22,7 @@ import asyncio
 import json
 import random
 
+
 # Set up the OpenAI API. The key is stored as an environment variable for security reasons. 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
@@ -64,7 +65,9 @@ bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 # to classify which type of task will be run.
 import numpy as np
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Embedding, LSTM, Conv1D, MaxPooling1D, Dropout
+from tensorflow.keras.optimizers import Adam
+
 
 max_sequence_length = None
 word_to_index = None
@@ -242,8 +245,13 @@ async def train_keras():
 
     # Define the model
     model = Sequential()
-    model.add(Dense(64, activation='relu', input_shape=(max_sequence_length,)))
-    model.add(Dense(3, activation='softmax')) # change from 1 to 3
+    model.add(Embedding(input_dim=vocab_size, output_dim=50, input_length=max_sequence_length))
+    model.add(Conv1D(64, 5, activation='relu'))
+    model.add(MaxPooling1D(pool_size=4))
+    model.add(LSTM(64))
+    model.add(Dropout(0.5))
+    model.add(Dense(3, activation='softmax'))
+
 
     # Compile the model
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy']) # change loss function
