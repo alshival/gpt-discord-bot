@@ -65,7 +65,7 @@ bot = commands.Bot(command_prefix="!",intents=discord.Intents.all())
 # to classify which type of task will be run.
 import numpy as np
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Embedding, LSTM, Conv1D, MaxPooling1D, Dropout
+from tensorflow.keras.layers import Dense, Embedding, GlobalMaxPooling1D
 from tensorflow.keras.optimizers import Adam
 
 
@@ -243,12 +243,11 @@ async def train_keras():
     label_to_index = {'reminder': 0, 'other': 1, 'ttt': 2}
     y = np.array([label_to_index[label] for label in labels])
 
+    # Define the model
     model = Sequential()
-    model.add(Embedding(input_dim=vocab_size, output_dim=100, input_length=max_sequence_length))
-    model.add(LSTM(128, return_sequences=True))
-    model.add(Dropout(0.2))
-    model.add(LSTM(64))
-    model.add(Dropout(0.2))
+    model.add(Embedding(input_dim=vocab_size, output_dim=50, input_length=max_sequence_length))
+    model.add(GlobalMaxPooling1D())
+    model.add(Dense(16, activation='relu'))
     model.add(Dense(3, activation='softmax'))  # assuming you have 3 classes
 
     # Compile the model
