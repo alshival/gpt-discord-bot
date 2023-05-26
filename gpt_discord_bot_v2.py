@@ -764,15 +764,6 @@ async def gpt3(ctx, *, message):
         past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
 
         # Construct the messages parameter with the past prompts and responses and the current message
-        messages = []
-        # Here we include some examples of reminders for our task model. Ideally, this would be a fine-tuned model,
-        # but that requires further setup.
-        messages.extend([{'role': 'user', 'content': "Remind me to turn in my homework next week."},
-                         {'role': 'assistant', 'content': f'!reminder {(datetime.now() + timedelta(weeks=1)).strftime("%Y-%m-%d")} Turn in homework'}])
-        messages.extend([{'role': 'user', 'content': "Remind me in three hours to pick up the kids."},
-                         {'role': 'assistant', 'content': f'!reminder {(datetime.now() + timedelta(hours=3)).strftime("%Y-%m-%d %H:%M")} Pick up the kids'}])
-        messages.extend([{'role':'user','content':"remind me to pick up groceries at some point tomorrow afternoon"},
-                         {'role':'user','content':f'!reminder {(datetime.now() + timedelta(days=1)).replace(hour=15,minute=0).strftime("%Y-%m-%d %H:%M")} Pick up the kids'}])
         for prompt, response in past_prompts:
             messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
         messages.append({'role': 'user', 'content': message})
