@@ -650,8 +650,11 @@ async def gpt3(ctx, *, message):
                 {
                 'role':'user',
                 'content': """ 
-                    You are X. Make a move.
+                    Tic tac toe. You are X. Here's the board:
+                    ```
                     [['X', 'O', 'O'],['X', None, 'X'],[None, 'X', 'O']]
+                    ```
+                    Make a move.
                     """
                 },{
                 'role':'assistant',
@@ -660,7 +663,11 @@ async def gpt3(ctx, *, message):
                 {
                 'role':'user',
                 'content': """ 
-                    You are O. Make a move. [[None, 'O', 'X'], ['O', None, 'X'], ['X', 'O', None]]
+                    Tic tac toe. You are O. Here's the board:
+                    ```
+                    [[None, 'O', 'X'], ['O', None, 'X'], ['X', 'O', None]]
+                    ```
+                    Make a move.
                     """
                 },{
                 'role':'assistant',
@@ -669,7 +676,11 @@ async def gpt3(ctx, *, message):
                 {
                 'role':'user',
                 'content': """ 
-                    You are X. Make a move. [['X', 'X', 'O'], ['O', None, None], ['X', None, 'O']]
+                    Tic tac toe. You are X. Here's the board:
+                    ```
+                    [['X', 'X', 'O'], ['O', None, None], ['X', None, 'O']]
+                    ```
+                    Make a move.
                     """
                 },{
                 'role':'assistant',
@@ -677,7 +688,12 @@ async def gpt3(ctx, *, message):
                 },
                 {
                 'role':'user',
-                'content': """You are O. Make a move. [[None, 'O', None], ['X', 'O', 'X'], ['O', None, 'X']]"""
+                'content': """Tic tac toe. You are O. Here's the board:
+                ```
+                [[None, 'O', None], ['X', 'O', 'X'], ['O', None, 'X']]
+                ```
+                Make a move.
+                """
                 },{
                 'role':'assistant',
                 'content': "[[None, 'O', None], ['X', 'O', 'X'], ['O', 'O', 'X']]"
@@ -685,7 +701,11 @@ async def gpt3(ctx, *, message):
                 {
                 'role':'user',
                 'content':f"""
-                    You are {bot_emoji}. Make a move. {board}
+                    Tic tac toe. You are {bot_emoji}. Here's the board: 
+                    ```
+                    {board}
+                    ```
+                    Make a move.
                 """
                 }
             ]
@@ -817,6 +837,21 @@ async def label_last(ctx,label):
     # label_last_prompt
     await label_last_prompt(ctx,db_conn,label)
 
+#-----------------------------------------------------------------------
+# '!clear_reminders` command to 
+@bot.command()
+@commands.has_permissions(administrator=True)
+async def clear_reminders(ctx):
+    """Clears all reminders"""
+    conn = await aiosqlite.connect('data.db')
+    cursor = await conn.cursor()
+
+    # Delete all records from the reminders table
+    await cursor.execute("DELETE FROM reminders")
+    await conn.commit()
+    await conn.close()
+
+    await ctx.send('All reminders have been cleared.')
 #-----------------------------------------------------------------------
 # '!label_last' command to correctly label the last prompt.
 @bot.command()
