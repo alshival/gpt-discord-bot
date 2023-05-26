@@ -762,7 +762,7 @@ async def gpt3(ctx, *, message):
 
     elif message_category == 'other':
         past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
-
+        messages = []
         # Construct the messages parameter with the past prompts and responses and the current message
         for prompt, response in past_prompts:
             messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
