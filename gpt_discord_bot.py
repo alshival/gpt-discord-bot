@@ -9,6 +9,9 @@ prompt_table_cache_size = 200
 import discord
 from discord.ext import commands
 import openai
+import asyncio
+import sqlite3
+import aiosqlite
 import os
 
 # Set up the OpenAI API
@@ -104,33 +107,39 @@ async def davinci3(ctx, *, prompt):
 # Define a command
 @bot.command()
 async def gpt3(ctx, *, message):
+    db_conn = await create_connection()
+    
     past_prompts = await fetch_prompts(db_conn, channel_name, 4)  # Fetch the last 4 prompts and responses
 
-        # Construct the messages parameter with the past prompts and responses and the current message
-        for prompt, response in past_prompts:
-            messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
-        messages.append({'role': 'user', 'content': message})
+    # Construct the messages parameter with the past prompts and responses and the current message
+    for prompt, response in past_prompts:
+        messages.extend([{'role': 'user', 'content': prompt}, {'role': 'assistant', 'content': response}])
+    messages.append({'role': 'user', 'content': message})
 
-        # Generate a response using the 'gpt-3.5-turbo' model
-        response = openai.ChatCompletion.create(
-            model=model,
-            messages=messages,
-            max_tokens=1024,
-            n=1,
-            temperature=0.5,
-            top_p=1,
-            frequency_penalty=0.0,
-            presence_penalty=0.6,
-        )
+    # Generate a response using the 'gpt-3.5-turbo' model
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages,
+        max_tokens=1024,
+        n=1,
+        temperature=0.5,
+        top_p=1,
+        frequency_penalty=0.0,
+        presence_penalty=0.6,
+    )
 
-        # Extract the response text and send it back to the user
-        response_text = response['choices'][0]['message']['content']
-        await ctx.send(response_text)
+    # Extract the response text and send it back to the user
+    response_text = response['choices'][0]['message']['content']
+    await ctx.send(response_text)
 
-        # Store the new prompt and response in the 'prompts' table
-        await store_prompt(db_conn, username, message, model, response_text, channel_name)
-        await db_conn.close()
+    # Store the new prompt and response in the 'prompts' table
+    await store_prompt(db_conn, username, message, model, response_text, channel_name)
+    await db_conn.close()
     
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
 # Start the bot
 bot.run(os.environ.get("DISCORD_BOT_TOKEN"))
 
