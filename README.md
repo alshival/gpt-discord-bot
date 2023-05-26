@@ -8,6 +8,8 @@ Check a video of the bot in action here, and how to improve task classification 
 
 Please report any [issues via github](https://github.com/alshival/gpt-discord-bot/issues) or contact [Alshival's Data Service](mailto:support@alshival.com?subject=gpt-discord-bot%20error)
 
+NOTE: For a more behaved version of the bot that still has memory capabilities using SQLite, use `gpt_discord_bot.py` instead of `gpt_discord_bot_v2.py`. It does not have any reminder capabilities, but it can probably still play tick tack toe.
+
 Currently, we've implemented two models:
 
   * `text-davinci-003`: An economical choice suitable for a Discord server with a large user base. OpenAI does offer lighter models that might suit your requirements as well.
