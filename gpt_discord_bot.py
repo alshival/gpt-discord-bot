@@ -126,6 +126,7 @@ async def davinci3(ctx, *, prompt):
     # Store the new prompt and response in the 'prompts' table
     await store_prompt(db_conn, username, prompt, model, response_text, channel_name)
     await db_conn.close()
+    
 # Define a command
 @bot.command()
 async def gpt3(ctx, *, message):
