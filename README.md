@@ -55,7 +55,7 @@ or use natural language with `gpt3`:
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="100%" height="100%">
 </p>
 
-YAdmin can clear out the reminders using '!clear_reminders'. we will make this function user-specific in the next update.
+YAdmin can clear out the reminders using `!clear_reminders`. we will make this function user-specific in the next update.
 
 Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is a benefit of using the SQLite3 database.
 
