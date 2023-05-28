@@ -829,20 +829,20 @@ async def label_last(ctx,label):
     await label_last_prompt(ctx,db_conn,label)
 
 #-----------------------------------------------------------------------
-# '!clear_reminders` command to 
+# '!clear_reminders` command 
 @bot.command()
-@commands.has_permissions(administrator=True)
 async def clear_reminders(ctx):
-    """Clears all reminders"""
+    """Clears all reminders of the invoking user"""
     conn = await aiosqlite.connect('data.db')
     cursor = await conn.cursor()
 
-    # Delete all records from the reminders table
-    await cursor.execute("DELETE FROM reminders")
+    # Delete records from the reminders table where username is ctx.author.name
+    await cursor.execute("DELETE FROM reminders WHERE username=?", (str(ctx.author.name),))
     await conn.commit()
     await conn.close()
 
-    await ctx.send('All reminders have been cleared.')
+    await ctx.send('All your reminders have been cleared.')
+
 #-----------------------------------------------------------------------
 # '!label_last' command to correctly label the last prompt.
 @bot.command()
