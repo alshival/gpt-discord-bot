@@ -52,7 +52,7 @@ To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 or use natural language with `gpt3`:
 
 <p align="center">
-<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/gpt-discord-bot-v2%20(5).png?raw=true" width="100%" height="100%">
+<img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-28%201.58.52%20AM.png?raw=true" width="100%" height="100%">
 </p>
 
 You can clear out your reminders using `!clear_reminders`.
