@@ -59,12 +59,14 @@ You can clear out your reminders using `!clear_reminders`.
 
 Notice how memories are accessed by the bot across different models. `gpt3` is asked to continue where `davinci3` left off. This is a benefit of using the SQLite3 database.
 
-You can also have the bot play tic tac toe with you. GPT makes the move.
+You can also have the bot play tic tac toe with you. GPT makes the move. 
 
 
 <p align="center">
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-18%205.37.17%20AM.png?raw=true" width="100%" height="100%">
 </p>
+
+Note that at the moment, the Ai isn't the greatest challenger. We can always make it play better, but how easy it is to beat them is kind of entertaining.
 
 # Training the keras layer
 
