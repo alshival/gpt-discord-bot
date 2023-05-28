@@ -186,8 +186,7 @@ Remember, this is just a starting point. As you grow more comfortable with the b
 ```
 DONE: Rebuilt locally from scratch. Bot is starting up smoothly now. 
 * TO DO: Start on v3, improving on v2. Code so that it can handle multiple guilds.
-* TO DO: provide starter database for training the keras layer. labeled_prompts will be included in there for further training. 
-* TO DO: Add ability to cancel reminders.
+* TO DO: provide starter database for training the keras layer.
 * TO DO: Consider a Federated Learning Model for the keras layer. Or another pretrained model.
 * To DO: Cache training data for tic tac toe game. The Ai should get better as time goes on.
        To this, I have some ideas. We collect the data for the games. Store each state of the board
