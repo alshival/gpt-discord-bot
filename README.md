@@ -41,7 +41,7 @@ If the bot does not respond, the model might be overloaded with requests.
 <img src="https://github.com/alshival/gpt-discord-bot/blob/main/.meta/Screenshot%202023-05-19%207.12.40%20PM.png?raw=true" width="100%" height="100%">
 </p>
 
-In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, openAi's models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decition each time they make a move.
+In order to minimize reliance on openAi, a keras layer for relaying requests was added before `gpt-3.5-turbo`.  Still, openAi's models do most of the heavy lifting. This is what allows our bot to create reminders using natural language. Each time you use a model command, the openAi model is used only once to obtain the end result. The tic tac toe games requires openAi to make a decision each time they make a move.
 
 To schedule a reminder, use `!reminder YYYY-MM-DD HH:MM <REMINDER>`:
 
